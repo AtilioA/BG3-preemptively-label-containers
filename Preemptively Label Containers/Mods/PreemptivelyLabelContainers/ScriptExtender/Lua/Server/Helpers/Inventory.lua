@@ -162,14 +162,11 @@ function GetInventory(object, primaryOnly, shallow)
     return items
 end
 
-function FilterOutRottenFood(items)
+function FilterOutIgnoredItems(items)
     local filteredItems = {}
     for _, item in ipairs(items) do
-        if item.TemplateName ~= nil and string.find(item.TemplateName, "Rotten") then
-            -- if Osi.IsJunk(item.TemplateId) then
-            -- Utils.DebugPrint(2, "Skipping junk item: " .. item.Name)
-        else
-            -- Utils.DebugPrint(2, "Adding item: " .. item.Name)
+        if item.TemplateName and not IgnoredItems[item.TemplateName] then
+            -- If the item's template name is not in the ignored items list
             table.insert(filteredItems, item)
         end
     end
@@ -180,7 +177,7 @@ function CountFilteredItems(object)
     local items = GetInventory(object)
 
     -- TODO: filter with user-defined lists (with default lists for junk, rotten, etc.)
-    local filteredItems = FilterOutRottenFood(items)
+    local filteredItems = FilterOutIgnoredItems(items)
 
     return #filteredItems
 end

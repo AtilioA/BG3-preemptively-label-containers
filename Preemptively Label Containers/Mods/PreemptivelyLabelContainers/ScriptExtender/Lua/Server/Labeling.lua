@@ -28,7 +28,7 @@ function CheckAndRenameIfLootable(object)
     local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or JsonConfig.FEATURES.labeling
         .owned_containers
     local shouldRemoveFromOpened = JsonConfig.FEATURES.labeling.remove_from_opened
-    local perceptionDC = JsonConfig.FEATURES.perception_check_dc
+    local perceptionDC = JsonConfig.FEATURES.labeling.perception_check_dc
 
     if perceptionDC <= 1 or (Dice.RollPerception(Osi.GetHostCharacter(), perceptionDC)) then
         if Loot.IsLootable(object) and shouldLabelOwned then
@@ -84,7 +84,7 @@ function SetNewLabel(container)
 
     local addParentheses = JsonConfig.FEATURES.label.add_parentheses
     local capitalize = JsonConfig.FEATURES.label.capitalize
-    local shouldAppend = JsonConfig.FEATURES.label.appended
+    local shouldAppend = JsonConfig.FEATURES.label.append
     local shouldSimulateController = JsonConfig.FEATURES.label.simulate_controller
     local shouldDisplayNumberOfItems = JsonConfig.FEATURES.label.display_number_of_items
 

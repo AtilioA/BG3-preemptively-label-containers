@@ -1,10 +1,11 @@
 Ext.Require("Server/Utils.lua")
+Ext.Require("Server/Config.lua")
+Ext.Require("Server/Helpers/Junk.lua")
 Ext.Require("Server/Helpers/Dice.lua")
 Ext.Require("Server/Helpers/Dist.lua")
 Ext.Require("Server/Helpers/String.lua")
 Ext.Require("Server/Helpers/Loot.lua")
 Ext.Require("Server/Helpers/Inventory.lua")
-Ext.Require("Server/Config.lua")
 Ext.Require("Server/Labeling.lua")
 Ext.Require("Server/EventHandlers.lua")
 

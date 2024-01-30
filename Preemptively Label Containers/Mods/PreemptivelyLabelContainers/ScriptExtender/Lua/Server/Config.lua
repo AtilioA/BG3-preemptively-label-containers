@@ -8,29 +8,27 @@ Config.defaultConfig = {
         enabled = true, -- Toggle the mod on/off
     },
     FEATURES = {
-        radius = 6,              -- How far away to look for nearby containers (in meters) (controller search radius is 5m)
-        refresh_interval = 500,  -- How often to refresh the list of nearby containers (in milliseconds). Recommendation: set it between 250-2000, higher if you have a weaker CPU. (Labels are always immediately updated after usage.)
+        radius = 6,                     -- How far away to look for nearby containers (in meters) (controller search radius is 5)
+        refresh_interval = 500,         -- How often to refresh the list of nearby containers (in milliseconds). Recommendation: set it between 250-2000, higher if you have a weaker CPU. (Labels are always immediately updated after container usage)
         labeling = {
-            owned_containers = true, -- Label containers owned by others (the ones that show a red highlight)
+            owned_containers = true,    -- Label containers owned by others (the ones that show a red highlight)
             remove_from_opened = false, -- Remove the label from containers that are opened by the player (good for controller users)
+            perception_check_dc = 0,    -- Perception check DC to label a container (0 = always succeed)
         },
         label = {
-            capitalize = true,               -- Capitalize the label
+            capitalize = true,              -- Capitalize the label
             add_parentheses = true,          -- Make sure the label is surrounded by parentheses
-            appended = true,                 -- Adds the label after the container's name (false = prepends the label)
+            append = true,                 -- Adds the label after the container's name (false = prepends the label)
             simulate_controller = false,     -- Simulate controller '(Empty)' label seen in controller UI. Will look bad in KB/M UI.
             display_number_of_items = false, -- Display the number of items in the container
         },
-        -- TODO: refactor this to accept user lists
-        filter = {
-            rotten = true,       -- Ignore rotten items when counting items in containers
-            junk = true,         -- TODO: Ignore junk items when counting items in containers
+        filters = {
+            ignored_items = true, -- Ignore items in the 'ignored_items.json' file
         },
-        perception_check_dc = 0, -- Perception check DC to label a container (0 = always succeed)
     },
     DEBUG = {
-        level = 0, -- 0 = no debug, 1 = minimal, 2 = verbose logs
-        always_relabel = false, -- Always try to label containers, even if they are already labeled
+        level = 0,              -- 0 = no debug, 1 = minimal, 2 = verbose logs
+        always_relabel = false, -- Skip checks to label containers, always try even if they are already labeled (UNUSED)
     }
 }
 
@@ -55,6 +53,12 @@ end
 function Config.SaveConfig(filePath, config)
     local configFileContent = Ext.Json.Stringify(config, { Beautify = true })
     Ext.IO.SaveFile(Config.GetModPath(filePath), configFileContent)
+end
+
+function Config.JSONFileExists(filePath)
+    local fullPath = Config.GetModPath(filePath)
+    local fileContent = Ext.IO.LoadFile(fullPath)
+    return fileContent ~= nil and fileContent ~= ""
 end
 
 function Config.UpdateConfig(existingConfig, defaultConfig)
