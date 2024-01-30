@@ -7,6 +7,8 @@ EHandlers.processed_objects = {}
 
 -- Initializes a timer on gaining control
 function EHandlers.OnGainedControl(character)
+  -- Utils.DumpCharacterEntity(character)
+  -- Utils.DebugPrint(2, Osi.CalculatePassiveSkill(character, "Perception"))
   Labeling.LabelNearbyContainers()
   Osi.TimerLaunch("RenameContainers", JsonConfig.FEATURES.refresh_interval)
 end
@@ -23,7 +25,7 @@ function EHandlers.OnTimerFinished(timerName)
 end
 
 function EHandlers.OnUseStarted(character, item)
-  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and IsLootable(item) then
+  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and Loot.IsLootable(item) then
     Utils.DebugPrint(2, "UseStarted: " .. character .. " " .. item)
     EHandlers.all_opened_containers[item] = true
     -- EHandlers.processed_objects[item] = nil
@@ -31,7 +33,7 @@ function EHandlers.OnUseStarted(character, item)
 end
 
 function EHandlers.OnUseEnded(character, item, result)
-  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and IsLootable(item) then
+  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and Loot.IsLootable(item) then
     Utils.DebugPrint(2, "UseEnded: " .. character .. " " .. item .. " " .. result)
     EHandlers.recently_closed[item] = true
     EHandlers.processed_objects[item] = nil
@@ -46,7 +48,7 @@ function EHandlers.OnUseEnded(character, item, result)
 end
 
 function EHandlers.OnRequestCanLoot(looter, character)
-  if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and IsLootable(character) then
+  if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and Loot.IsLootable(character) then
     Utils.DebugPrint(2, "OnRequestCanLoot: " .. looter .. " " .. character)
     EHandlers.all_opened_containers[character] = true
     -- EHandlers.processed_objects[character] = nil
@@ -54,7 +56,7 @@ function EHandlers.OnRequestCanLoot(looter, character)
 end
 
 function EHandlers.OnCharacterLootedCharacter(looter, character)
-  if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and IsLootable(character) then
+  if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and Loot.IsLootable(character) then
     Utils.DebugPrint(2, "OnCharacterLootedCharacter: " .. looter .. " " .. character)
     EHandlers.recently_closed[character] = true
     EHandlers.processed_objects[character] = nil

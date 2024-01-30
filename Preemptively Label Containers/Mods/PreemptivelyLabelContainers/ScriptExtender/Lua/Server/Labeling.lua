@@ -28,18 +28,23 @@ function CheckAndRenameIfLootable(object)
     local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or JsonConfig.FEATURES.labeling
         .owned_containers
     local shouldRemoveFromOpened = JsonConfig.FEATURES.labeling.remove_from_opened
+    local perceptionDC = JsonConfig.FEATURES.perception_check_dc
 
-    if Loot.IsLootable(object) and shouldLabelOwned then
-        -- This will also remove numeric labels (i.e., not only Empty labels)
-        if shouldRemoveFromOpened and EHandlers.all_opened_containers[object] then
-            Utils.DebugPrint(2, "Removing label for: " .. object)
-            RemoveLabel(object)
+    if perceptionDC <= 1 or (Dice.RollPerception(Osi.GetHostCharacter(), perceptionDC)) then
+        if Loot.IsLootable(object) and shouldLabelOwned then
+            -- This will also remove numeric labels (i.e., not only Empty labels)
+            if shouldRemoveFromOpened and EHandlers.all_opened_containers[object] then
+                Utils.DebugPrint(2, "Removing label for: " .. object)
+                RemoveLabel(object)
+            else
+                Utils.DebugPrint(2, "Setting label for: " .. object)
+                SetNewLabel(object)
+            end
         else
-            Utils.DebugPrint(2, "Setting label for: " .. object)
-            SetNewLabel(object)
+            Utils.DebugPrint(3, "Not labeling: " .. object)
         end
     else
-        Utils.DebugPrint(3, "Not labeling: " .. object)
+        Utils.DebugPrint(2, "Failed perception check for: " .. object)
     end
 end
 
