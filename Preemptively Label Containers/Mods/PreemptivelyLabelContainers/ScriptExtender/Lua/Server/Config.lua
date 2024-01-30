@@ -15,6 +15,7 @@ Config.defaultConfig = {
             remove_from_opened = false, -- Remove the label from containers that are opened by the player (good for controller users)
         },
         label = {
+            capitalize = true,               -- Capitalize the label
             add_parentheses = true,          -- Make sure the label is surrounded by parentheses
             appended = true,                 -- Adds the label after the container's name (false = prepends the label)
             simulate_controller = false,     -- Simulate controller '(Empty)' label seen in controller UI. Will look bad in KB/M UI.
