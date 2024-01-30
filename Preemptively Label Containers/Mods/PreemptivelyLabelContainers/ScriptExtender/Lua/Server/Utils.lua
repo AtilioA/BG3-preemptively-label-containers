@@ -12,9 +12,9 @@ end
 
 function Utils.TableContains(table, element)
   for _, value in pairs(table) do
-      if value == element then
-          return true
-      end
+    if value == element then
+      return true
+    end
   end
   return false
 end
@@ -22,6 +22,22 @@ end
 -- Get the last 36 characters of the UUID (template ID I guess)
 function Utils.GetGUID(uuid)
   return string.sub(uuid, -36)
+end
+
+--- func desc
+---@param templateuuid string
+---@return string
+function Utils.GetUID(templateuuid)
+  if #templateuuid <= 36 then
+      return templateuuid -- Return the original string if it's too short
+  end
+
+  local result = string.sub(templateuuid, 1, -37) -- Remove last 36 characters
+
+  -- Remove trailing underscore if present
+  result = result:gsub("_$", "")
+
+  return result
 end
 
 function Utils.GetPartyMembers()

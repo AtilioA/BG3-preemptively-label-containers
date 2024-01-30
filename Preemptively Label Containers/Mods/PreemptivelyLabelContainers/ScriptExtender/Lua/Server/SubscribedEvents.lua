@@ -6,13 +6,16 @@ local function SubscribeToEvents()
 
     Ext.Osiris.RegisterListener("TimerFinished", 1, "after", EHandlers.OnTimerFinished)
 
-    -- if JsonConfig.FEATURES.label.simulate_controller then
-      -- Keeps track of opened containers
-      Ext.Osiris.RegisterListener("UseStarted", 2, "before", EHandlers.OnUseStarted)
-      Ext.Osiris.RegisterListener("UseFinished", 3, "before", EHandlers.OnUseEnded)
+    Ext.Osiris.RegisterListener("MovedFromTo", 4, "before", EHandlers.OnMovedFromTo)
 
-      Ext.Osiris.RegisterListener("RequestCanLoot", 2, "after", EHandlers.OnRequestCanLoot)
-      Ext.Osiris.RegisterListener("CharacterLootedCharacter", 2, "before", EHandlers.OnCharacterLootedCharacter)
+    -- if JsonConfig.FEATURES.label.simulate_controller then
+    -- Keeps track of opened containers
+    Ext.Osiris.RegisterListener("UseStarted", 2, "before", EHandlers.OnUseStarted)
+    Ext.Osiris.RegisterListener("UseFinished", 3, "before", EHandlers.OnUseEnded)
+
+    Ext.Osiris.RegisterListener("RequestCanLoot", 2, "after", EHandlers.OnRequestCanLoot)
+    Ext.Osiris.RegisterListener("CharacterLootedCharacter", 2, "before", EHandlers.OnCharacterLootedCharacter)
+
     -- end
   end
 end

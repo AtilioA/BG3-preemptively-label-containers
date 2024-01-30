@@ -68,4 +68,18 @@ function EHandlers.OnCharacterLootedCharacter(character, item)
   end
 end
 
+-- Reload the config if moving gold to a container
+function EHandlers.OnMovedFromTo(movedObject, fromObject, toObject, isTrade)
+  Utils.DebugPrint(2, "OnMovedFromTo: " .. movedObject .. " " .. fromObject .. " " .. toObject .. " " .. isTrade)
+  if Osi.IsInPartyWith(Osi.GetHostCharacter(), fromObject) == 1 and isTrade == 0 then
+    if Utils.GetUID(movedObject) == 'LOOT_Gold_A' and Osi.IsContainer(toObject) == 1 then
+      JsonConfig = Config.LoadJSONConfig()
+      EHandlers.all_opened_containers = {}
+      EHandlers.recently_closed = {}
+      EHandlers.processed_objects = {}
+      Osi.TimerLaunch("RenameContainers", 1)
+    end
+  end
+end
+
 return EHandlers
