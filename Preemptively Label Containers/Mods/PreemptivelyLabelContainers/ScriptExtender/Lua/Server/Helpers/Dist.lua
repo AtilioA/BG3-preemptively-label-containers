@@ -25,14 +25,16 @@ function GetNearbyCharacters(source, radius, ignoreHeight)
 
     local nearbyEntities = {}
     for _, character in ipairs(Ext.Entity.GetAllEntitiesWithComponent("IsCharacter")) do
-        local distance = GetDistance(pos, character.Transform.Transform.Translate, ignoreHeight)
-        if distance <= radius then
-            table.insert(nearbyEntities, {
-                Entity = character,
-                Guid = character.Uuid.EntityUuid,
-                Distance = distance,
-                Name = Ext.Loca.GetTranslatedString(character.DisplayName.NameKey.Handle.Handle)
-            })
+        if character.Transform and character.Transform.Transform then
+            local distance = GetDistance(pos, character.Transform.Transform.Translate, ignoreHeight)
+            if distance <= radius then
+                table.insert(nearbyEntities, {
+                    Entity = character,
+                    Guid = character.Uuid.EntityUuid,
+                    Distance = distance,
+                    Name = Ext.Loca.GetTranslatedString(character.DisplayName.NameKey.Handle.Handle)
+                })
+            end
         end
     end
 
