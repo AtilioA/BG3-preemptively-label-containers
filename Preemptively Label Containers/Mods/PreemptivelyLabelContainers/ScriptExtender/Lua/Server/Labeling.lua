@@ -8,14 +8,16 @@ function Labeling.LabelNearbyContainers()
     Utils.DebugPrint(3, "Nearby items: " .. #nearbyContainers)
 
     for _, member in ipairs(nearbyContainers) do
-        local isNewOrReopened = not EHandlers.processed_objects[member.Guid] or EHandlers.recently_closed[member.Guid]
+        local processed = EHandlers.processed_objects[member.Guid]
+        local recentlyClosed = EHandlers.recently_closed[member.Guid]
+        local isNewOrReopened = not processed or recentlyClosed
         if isNewOrReopened then
             Utils.DebugPrint(2, "Processing object: " .. member.Guid)
             CheckAndRenameEmptyContainer(member.Guid)
             EHandlers.processed_objects[member.Guid] = true
             EHandlers.recently_closed[member.Guid] = nil
         else
-            -- Utils.DebugPrint(2, "Not processing container: " .. member.Guid)
+            Utils.DebugPrint(3, "Object already processed: " .. member.Guid)
         end
     end
 end
@@ -33,18 +35,20 @@ end
 -- TODO: object must not be in EHandlers.all_opened_containers. If it is, call RemoveEmptyName
 function CheckAndRenameEmptyContainer(object)
     local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or JsonConfig.FEATURES.labeling
-    .owned_containers
+        .owned_containers
     local shouldRemoveFromOpened = JsonConfig.FEATURES.labeling.remove_from_opened
 
     if IsLootable(object) and shouldLabelOwned then
         -- This will also remove numeric labels (i.e., not only Empty labels)
         if shouldRemoveFromOpened and EHandlers.all_opened_containers[object] then
             Utils.DebugPrint(2, "Removing label for: " .. object)
-            -- RemoveLabel(object)
+            RemoveLabel(object)
         else
             Utils.DebugPrint(2, "Setting label for: " .. object)
             SetNewLabel(object)
         end
+    else
+        Utils.DebugPrint(3, "Not labeling: " .. object)
     end
 end
 
@@ -153,8 +157,9 @@ end
 -- TODO: clear the extra label of a container that is opened. I don't know if we can just set it to "", but a regex replace would work.
 -- After player opens a container, remove the empty label. However: "I diffed a dump of an unopened and opened version of the same item and there weren't any differences 😦"
 ---@param entity EntityHandle
-function RemoveLabel(entity)
-    Utils.DebugPrint(2, "Removing label for: " .. entity)
+function RemoveLabel(entityHandle)
+    local entity = Ext.Entity.Get(entityHandle)
+    -- Utils.DebugPrint(2, "Removing label for: " .. entity)
     entity.DisplayName.Name = ""
     entity:Replicate("DisplayName")
 end
