@@ -1,8 +1,13 @@
 EHandlers = {}
 
-EHandlers.opened_containers = {}
+EHandlers.all_opened_containers = {}
+EHandlers.recently_closed = {}
+-- We're interested in containers/corpses, but we check for objects to avoid doing checks early
+EHandlers.processed_objects = {}
 
+-- Initializes a timer on gaining control
 function EHandlers.OnGainedControl(character)
+  Labeling.LabelNearbyContainers()
   Osi.TimerLaunch("RenameContainers", JsonConfig.FEATURES.refresh_interval)
 end
 
@@ -11,33 +16,55 @@ function EHandlers.OnTimerFinished(timerName)
     return
   end
 
-  local nearbyContainers = GetNearbyCharactersAndItems(Osi.GetHostCharacter(), JsonConfig.FEATURES.radius, true, true)
-  Utils.DebugPrint(3, "Nearby items: " .. #nearbyContainers)
-  for _, member in ipairs(nearbyContainers) do
-    CheckAndRenameEmptyContainer(member.Guid)
-  end
+  Utils.DebugPrint(2, "Timer finished: " .. timerName)
+  Labeling.LabelNearbyContainers()
+
   Osi.TimerLaunch("RenameContainers", JsonConfig.FEATURES.refresh_interval)
 end
 
 function EHandlers.OnUseStarted(character, item)
-  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 then
-    Utils.DebugPrint(2, "UseEnded: " .. character .. " " .. item)
-    if IsLootable(item) then
-      if CountFilteredItems(item) == 0 then
-        table.insert(EHandlers.opened_containers, item.Guid)
-      end
-    end
+  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and IsLootable(item) then
+    Utils.DebugPrint(2, "UseStarted: " .. character .. " " .. item)
+    EHandlers.all_opened_containers[item] = true
+    -- EHandlers.processed_objects[item] = nil
   end
 end
 
 function EHandlers.OnUseEnded(character, item, result)
-  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 then
+  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and IsLootable(item) then
     Utils.DebugPrint(2, "UseEnded: " .. character .. " " .. item .. " " .. result)
-    if IsLootable(item) then
-      if CountFilteredItems(item) == 0 and not Utils.TableContains(EHandlers.opened_containers, item.Guid) then
-        table.insert(EHandlers.opened_containers, item.Guid)
-      end
-    end
+    EHandlers.recently_closed[item] = true
+    EHandlers.processed_objects[item] = nil
+    -- if  CountFilteredItems(item) ~= 0 then
+    -- Call function so that the container is relabeled immediately
+    CheckAndRenameEmptyContainer(item)
+    -- end
+    -- if CountFilteredItems(item) == 0 then
+    --   -- Call function so that the container is relabeled immediately
+    -- end
+  end
+end
+
+function EHandlers.OnRequestCanLoot(character, item)
+  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and IsLootable(item) then
+    Utils.DebugPrint(2, "OnRequestCanLoot: " .. character .. " " .. item)
+    EHandlers.all_opened_containers[item] = true
+    EHandlers.processed_objects[item] = nil
+  end
+end
+
+function EHandlers.OnCharacterLootedCharacter(character, item)
+  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and IsLootable(item) then
+    Utils.DebugPrint(2, "OnCharacterLootedCharacter: " .. character .. " " .. item)
+    EHandlers.recently_closed[item] = true
+    EHandlers.processed_objects[item] = nil
+    -- if  CountFilteredItems(item) ~= 0 then
+    -- Call function so that the container is relabeled immediately
+    CheckAndRenameEmptyContainer(item)
+    -- end
+    -- if CountFilteredItems(item) == 0 then
+    --   -- Call function so that the container is relabeled immediately
+    -- end
   end
 end
 
