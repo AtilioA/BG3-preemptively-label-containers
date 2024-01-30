@@ -9,7 +9,6 @@ local function SubscribeToEvents()
     Ext.Osiris.RegisterListener("MovedFromTo", 4, "before", EHandlers.OnMovedFromTo)
 
     -- if JsonConfig.FEATURES.label.simulate_controller then
-    -- Keeps track of opened containers
     Ext.Osiris.RegisterListener("UseStarted", 2, "before", EHandlers.OnUseStarted)
     Ext.Osiris.RegisterListener("UseFinished", 3, "before", EHandlers.OnUseEnded)
 

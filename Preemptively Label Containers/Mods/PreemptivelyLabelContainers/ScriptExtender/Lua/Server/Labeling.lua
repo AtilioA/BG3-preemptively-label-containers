@@ -13,7 +13,7 @@ function Labeling.LabelNearbyContainers()
         local isNewOrReopened = not processed or recentlyClosed
         if isNewOrReopened then
             Utils.DebugPrint(2, "Processing object: " .. member.Guid)
-            CheckAndRenameEmptyContainer(member.Guid)
+            CheckAndRenameIfLootable(member.Guid)
             EHandlers.processed_objects[member.Guid] = true
             EHandlers.recently_closed[member.Guid] = nil
         else
@@ -22,23 +22,14 @@ function Labeling.LabelNearbyContainers()
     end
 end
 
-function IsCorpse(object)
-    -- TODO: add knocked out check
-    return GetInventory(object, true, true) ~= nil and Osi.IsDead(object) == 1
-end
-
-function IsLootable(object)
-    return (Osi.IsContainer(object) == 1) or IsCorpse(object)
-end
-
 -- Function to check if the container is empty and change its name
 -- TODO: object must not be in EHandlers.all_opened_containers. If it is, call RemoveEmptyName
-function CheckAndRenameEmptyContainer(object)
+function CheckAndRenameIfLootable(object)
     local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or JsonConfig.FEATURES.labeling
         .owned_containers
     local shouldRemoveFromOpened = JsonConfig.FEATURES.labeling.remove_from_opened
 
-    if IsLootable(object) and shouldLabelOwned then
+    if Loot.IsLootable(object) and shouldLabelOwned then
         -- This will also remove numeric labels (i.e., not only Empty labels)
         if shouldRemoveFromOpened and EHandlers.all_opened_containers[object] then
             Utils.DebugPrint(2, "Removing label for: " .. object)
@@ -52,62 +43,21 @@ function CheckAndRenameEmptyContainer(object)
     end
 end
 
--- Function to pad a string with spaces to match a specified width
----@param str string
----@param width number
----@return string
-function PadString(str, width)
-    -- TODO: pad (Empty) with spaces to match the width of the UI. This will be a bit tricky since the font isn't monospace, but it should be doable.
-    -- We can add the number of spaces until the right edge minus the width of the baseName.
-    local strWidth = string.len(str)
-    if strWidth >= width then
-        return str
-    end
-
-    local padding = width - strWidth
-    -- Remove one extra for each uppercase letter in the string
-    padding = padding - string.len(str:gsub("%u", ""))
-    local paddedStr = string.rep(" ", padding) .. str
-    return paddedStr
-end
-
---- Add parentheses around a string if it does not already have them
-function AddParentheses(str)
-    if string.match(str, "%(.*%)") then
-        return str
-    else
-        return "(" .. str .. ")"
-    end
-end
-
--- Remove parentheses around a string if it has them
-function RemoveParentheses(str)
-    return string.gsub(str, "%s*%(%s*(.*)%s*%)", "%1")
-end
-
-function Capitalize(str)
-    return str:gsub("^%l", string.upper)
-end
-
-function Lowercase(str)
-    return str:gsub("^%u", string.lower)
-end
-
 -- Function to create a label based on the item count
 local function CreateLabel(count, displayItemCount, addParentheses, capitalize)
     if displayItemCount then
         return "(" .. count .. ")"
     elseif count == 0 then
-        local translatedString = RemoveParentheses(Ext.Loca.GetTranslatedString(Labeling.EMPTY_STRING_HANDLE))
+        local translatedString = String.RemoveParentheses(Ext.Loca.GetTranslatedString(Labeling.EMPTY_STRING_HANDLE))
 
         if capitalize then
-            translatedString = Capitalize(translatedString)
+            translatedString = String.Capitalize(translatedString)
         else
-            translatedString = Lowercase(translatedString)
+            translatedString = String.Lowercase(translatedString)
         end
 
         if addParentheses then
-            translatedString = AddParentheses(translatedString)
+            translatedString = String.AddParentheses(translatedString)
         end
 
         return translatedString
@@ -136,7 +86,7 @@ function SetNewLabel(container)
 
     local label = CreateLabel(itemCount, shouldDisplayNumberOfItems, addParentheses, capitalize)
     if shouldSimulateController and shouldDisplayNumberOfItems and count ~= 0 then
-        label = PadString(label, 53)
+        label = String.PadString(label, 53)
     end
 
     Utils.DebugPrint(2, "Label: " .. label)
@@ -163,19 +113,5 @@ function RemoveLabel(entityHandle)
     entity.DisplayName.Name = ""
     entity:Replicate("DisplayName")
 end
-
--- -- Function to remove or adjust the label of a reopened container
--- ---@param container EntityHandle
--- function RemoveLabel(container)
---     local entity = GetEntity(container)
---     if entity ~= nil then
---         local nameWithoutParentheses = RemoveParentheses(entity.DisplayName.Name)
---         entity.DisplayName.Name = nameWithoutParentheses
---         entity:Replicate("DisplayName")
---     else
---         Utils.DebugPrint(2, "Entity is nil")
---     end
--- end
-
 
 return Labeling

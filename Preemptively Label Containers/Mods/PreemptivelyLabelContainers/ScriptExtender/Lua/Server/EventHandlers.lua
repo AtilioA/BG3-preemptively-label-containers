@@ -37,7 +37,7 @@ function EHandlers.OnUseEnded(character, item, result)
     EHandlers.processed_objects[item] = nil
     -- if  CountFilteredItems(item) ~= 0 then
     -- Call function so that the container is relabeled immediately
-    CheckAndRenameEmptyContainer(item)
+    CheckAndRenameIfLootable(item)
     -- end
     -- if CountFilteredItems(item) == 0 then
     --   -- Call function so that the container is relabeled immediately
@@ -45,24 +45,24 @@ function EHandlers.OnUseEnded(character, item, result)
   end
 end
 
-function EHandlers.OnRequestCanLoot(character, item)
-  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and IsLootable(item) then
-    Utils.DebugPrint(2, "OnRequestCanLoot: " .. character .. " " .. item)
-    EHandlers.all_opened_containers[item] = true
-    EHandlers.processed_objects[item] = nil
+function EHandlers.OnRequestCanLoot(looter, character)
+  if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and IsLootable(character) then
+    Utils.DebugPrint(2, "OnRequestCanLoot: " .. looter .. " " .. character)
+    EHandlers.all_opened_containers[character] = true
+    -- EHandlers.processed_objects[character] = nil
   end
 end
 
-function EHandlers.OnCharacterLootedCharacter(character, item)
-  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and IsLootable(item) then
-    Utils.DebugPrint(2, "OnCharacterLootedCharacter: " .. character .. " " .. item)
-    EHandlers.recently_closed[item] = true
-    EHandlers.processed_objects[item] = nil
-    -- if  CountFilteredItems(item) ~= 0 then
+function EHandlers.OnCharacterLootedCharacter(looter, character)
+  if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and IsLootable(character) then
+    Utils.DebugPrint(2, "OnCharacterLootedCharacter: " .. looter .. " " .. character)
+    EHandlers.recently_closed[character] = true
+    EHandlers.processed_objects[character] = nil
+    -- if  CountFilteredCharacters(character) ~= 0 then
     -- Call function so that the container is relabeled immediately
-    CheckAndRenameEmptyContainer(item)
+    CheckAndRenameIfLootable(character)
     -- end
-    -- if CountFilteredItems(item) == 0 then
+    -- if CountFilteredCharacters(character) == 0 then
     --   -- Call function so that the container is relabeled immediately
     -- end
   end

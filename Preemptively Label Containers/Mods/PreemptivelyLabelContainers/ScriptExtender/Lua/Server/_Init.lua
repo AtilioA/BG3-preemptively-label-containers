@@ -1,8 +1,10 @@
-Ext.Require("Server/Utils.lua")
-Ext.Require("Server/Helpers/Inventory.lua")
 Ext.Require("Server/Helpers/Dist.lua")
-Ext.Require("Server/Labeling.lua")
+Ext.Require("Server/Helpers/String.lua")
+Ext.Require("Server/Helpers/Loot.lua")
+Ext.Require("Server/Helpers/Inventory.lua")
+Ext.Require("Server/Utils.lua")
 Ext.Require("Server/Config.lua")
+Ext.Require("Server/Labeling.lua")
 Ext.Require("Server/EventHandlers.lua")
 
 MOD_UUID = "15230bba-a3ab-4352-92f6-1c4c86d2a1e3"
