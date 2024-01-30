@@ -8,23 +8,28 @@ Config.defaultConfig = {
         enabled = true, -- Toggle the mod on/off
     },
     FEATURES = {
-        radius = 6, -- How far away to look for nearby containers (in meters) (controller search radius is 5m)
-        refresh_interval = 250, -- How often to refresh the list of nearby containers (in milliseconds). Recommendation: set it between 250-2000, higher if you have a weaker CPU.
-        label = {
+        radius = 6,              -- How far away to look for nearby containers (in meters) (controller search radius is 5m)
+        refresh_interval = 500,  -- How often to refresh the list of nearby containers (in milliseconds). Recommendation: set it between 250-2000, higher if you have a weaker CPU. (Labels are always immediately updated after usage.)
+        labeling = {
             owned_containers = true, -- Label containers owned by others (the ones that show a red highlight)
-            align_right = true, -- Align the label to the right of the container name (false = aligns to left)
-            simulate_controller = false, -- Simulate controller '(Empty)' label seen in controller UI. Will look bad in KB/M UI.
+            remove_from_opened = false, -- Remove the label from containers that are opened by the player (good for controller users)
+        },
+        label = {
+            add_parentheses = true,          -- Make sure the label is surrounded by parentheses
+            appended = true,                 -- Adds the label after the container's name (false = prepends the label)
+            simulate_controller = false,     -- Simulate controller '(Empty)' label seen in controller UI. Will look bad in KB/M UI.
             display_number_of_items = false, -- Display the number of items in the container
         },
         -- TODO: refactor this to accept user lists
         filter = {
-            rotten = true, -- Ignore rotten items when counting items in containers
-            junk = true, -- TODO: Ignore junk items when counting items in containers
+            rotten = true,       -- Ignore rotten items when counting items in containers
+            junk = true,         -- TODO: Ignore junk items when counting items in containers
         },
         perception_check_dc = 0, -- Perception check DC to label a container (0 = always succeed)
     },
     DEBUG = {
-        level = 0 -- 0 = no debug, 1 = minimal, 2 = verbose logs
+        level = 0, -- 0 = no debug, 1 = minimal, 2 = verbose logs
+        always_relabel = false, -- Always try to label containers, even if they are already labeled
     }
 }
 
