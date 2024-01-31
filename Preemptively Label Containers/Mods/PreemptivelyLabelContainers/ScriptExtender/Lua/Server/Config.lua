@@ -19,7 +19,7 @@ Config.defaultConfig = {
             capitalize = true,              -- Capitalize the label
             add_parentheses = true,          -- Make sure the label is surrounded by parentheses
             append = true,                 -- Adds the label after the container's name (false = prepends the label)
-            simulate_controller = false,     -- Simulate controller '(Empty)' label seen in controller UI. Will look bad in KB/M UI.
+            simulate_controller = false,     -- Simulate controller '(Empty)' label seen in controller UI search results. Will look bad in KB/M UI.
             display_number_of_items = false, -- Display the number of items in the container
         },
         filters = {
