@@ -99,8 +99,12 @@ function SetNewLabel(container)
     local entity = GetEntity(container)
     if entity ~= nil then
         if label ~= "" then
-            local newDisplayName = shouldAppend and objectNameHandle .. " " .. label or
-                label .. " " .. objectNameHandle
+            local newDisplayName
+            if shouldAppend or shouldSimulateController then
+                newDisplayName = objectNameHandle .. " " .. label
+            else
+                newDisplayName = label .. " " .. objectNameHandle
+            end
             entity.DisplayName.Name = newDisplayName
             entity:Replicate("DisplayName")
         end
