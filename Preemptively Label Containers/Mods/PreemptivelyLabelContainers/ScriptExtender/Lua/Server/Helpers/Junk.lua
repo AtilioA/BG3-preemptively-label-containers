@@ -1,19 +1,7 @@
 Junk = {}
 
 JunkTable = {
-  'ARM_Gloves_Hide',
-  'BGO_Cabbage_Spoiled',
-  'CINE_LOOT_GEN_Palette_Paint_A',
-  'CINE_TOOL_GEN_Hammer_Repair_A',
-  'CONS_GEN_Drink_Mug_Metal_A_Beer',
-  'CONS_GEN_Rotten_Food',
-  'LOOT_HAG_Skeleton_Ribs_A',
-  'DEC_Dungeon_Skeleton_Skull_A',
-  'DEC_Dungeon_Skeleton_Skull_A_Bloody_A',
-  'CINE_DEC_Dungeon_Skeleton_Skull_A',
-  'DEC_GEN_Towels_Stacked_C',
-  'DEC_GEN_Towels_Stacked_E',
-  'DEC_Hospital_Bloodbank_Transfusion_Bottle_B',
+  "ARM_Gloves_Hide",
   "ARR_Arrow_Normal",
   "BASE_CONS_Drink_Potion",
   "BASE_LOOT_Arrow",
@@ -22,14 +10,17 @@ JunkTable = {
   "BASE_LOOT_Gem",
   "BASE_LOOT_Music",
   "BASE_LOOT_Necklace",
+  "BGO_Cabbage_Spoiled",
   "CINE_ARR_Arrow_Normal",
   "CINE_CONS_GEN_Drink_Mug_Metal_A_Empty",
+  "CINE_DEC_Dungeon_Skeleton_Skull_A",
   "CINE_DEC_FARM_Bucket_A",
   "CINE_DEC_GEN_Ink_Pot_Quill_A",
   "CINE_DEC_GEN_KitchenInstrument_Spoon_B_Wood_A",
   "CINE_DEC_GEN_Paintbrush_A",
   "CINE_LOOT_Alchemy_Crystal_I",
   "CINE_LOOT_GEN_Needle_A",
+  "CINE_LOOT_GEN_Palette_Paint_A",
   "CINE_LOOT_GEN_Poop_A",
   "CINE_LOOT_GEN_Poop_B",
   "CINE_LOOT_GEN_Wheat_A",
@@ -37,6 +28,7 @@ JunkTable = {
   "CINE_TOOL_Camp_Bedroll_Open_A",
   "CINE_TOOL_Camp_Bedroll_Open_C",
   "CINE_TOOL_GEN_Broom_B",
+  "CINE_TOOL_GEN_Hammer_Repair_A",
   "CINE_TOOL_GEN_Tong_A",
   "CINE_TOOL_GOB_Branding_Tool_A",
   "CINE_TOOL_GTY_Microscope_A",
@@ -66,6 +58,7 @@ JunkTable = {
   "CONS_GEN_Drink_Cup_Metal_A_Empty",
   "CONS_GEN_Drink_Cup_Metal_A_Flipped",
   "CONS_GEN_Drink_Cup_Metal_A_Oil",
+  "CONS_GEN_Drink_Mug_Metal_A_Beer",
   "CONS_GEN_Drink_Mug_Metal_A_Empty",
   "CONS_GEN_Food_Cheese_Blue_Piece_A_Rotten",
   "CONS_GEN_Food_Cheese_Blue_Piece_B_Rotten",
@@ -79,6 +72,10 @@ JunkTable = {
   "CONS_GEN_Food_Eggs_A_Rotten",
   "CONS_GEN_Food_Plate_A",
   "CONS_GEN_Food_Plate_B",
+  "CONS_GEN_Rotten_Food",
+  "CONT_Jergal_Urn_Bones_A",
+  "DEC_Dungeon_Skeleton_Skull_A_Bloody_A",
+  "DEC_Dungeon_Skeleton_Skull_A",
   "DEC_GEN_Gore_Pile_A_DarkUrgeButler",
   "DEC_GEN_Gore_Pile_A",
   "DEC_GEN_Hanging_Furnace_Pot_A",
@@ -120,9 +117,11 @@ JunkTable = {
   "DEC_GEN_Towels_Stacked_Bloody_E",
   "DEC_GEN_Towels_Stacked_Bloody_F",
   "DEC_GEN_Towels_Stacked_C_converted",
+  "DEC_GEN_Towels_Stacked_C",
   "DEC_GEN_Towels_Stacked_D_converted",
   "DEC_GEN_Towels_Stacked_D",
   "DEC_GEN_Towels_Stacked_E_converted",
+  "DEC_GEN_Towels_Stacked_E",
   "DEC_GEN_Towels_Stacked_F_converted",
   "DEC_GEN_Towels_Stacked_F",
   "DEC_HAG_Tea_Pot_A",
@@ -137,6 +136,7 @@ JunkTable = {
   "DEC_Harbour_Shell_Conch_C",
   "DEC_Harbour_Shell_Starfish_A",
   "DEC_Harbour_Shell_Venus_A",
+  "DEC_Hospital_Bloodbank_Transfusion_Bottle_B",
   "DEC_Laboratory_Flask_Glass_Installation_A_GlowA",
   "DEC_Laboratory_Flask_Glass_Installation_A",
   "DEC_Laboratory_Flask_Glass_Installation_B_Empty_A",
@@ -171,6 +171,7 @@ JunkTable = {
   "LOOT_GEN_Charcoal_C",
   "LOOT_GEN_Charcoal_D",
   "LOOT_GEN_Charcoal_E",
+  "LOOT_GEN_DryBone_A",
   "LOOT_GEN_Ghastly_Bottles_A",
   "LOOT_GEN_Ghastly_Bottles_B",
   "LOOT_GEN_Ghastly_Bottles_C",
@@ -193,6 +194,7 @@ JunkTable = {
   "LOOT_GEN_Toy_WoodenBlock_D",
   "LOOT_GEN_Wheat_A",
   "LOOT_GOB_Spear_Tip_A",
+  "LOOT_HAG_Skeleton_Ribs_A",
   "LOOT_Smith_Bellows_A",
   "LOOT_Smith_Tongs_A",
   "LOOT_Smith_Tongs_B",
@@ -226,11 +228,11 @@ JunkTable = {
 
 function Junk.SaveTableAsJSONIfNotExists(defaultTable, filePath)
   if not Config.JSONFileExists(filePath) then
-      local jsonString = defaultTable
-      Config.SaveConfig(filePath, jsonString)
-      Utils.DebugPrint(0, "Ignored items JSON file created: " .. filePath)
+    local jsonString = defaultTable
+    Config.SaveConfig(filePath, jsonString)
+    Utils.DebugPrint(0, "Ignored items JSON file created: " .. filePath)
   else
-      Utils.DebugPrint(1, "Ignored items JSON file already exists: " .. filePath)
+    Utils.DebugPrint(1, "Ignored items JSON file already exists: " .. filePath)
   end
 end
 
@@ -240,19 +242,18 @@ Junk.SaveTableAsJSONIfNotExists(JunkTable, "ignored_items.json")
 function Junk.LoadIgnoredItems()
   local ignoredItemsList = Config.LoadConfig("ignored_items.json")
   if ignoredItemsList then
-      Utils.DebugPrint(0, "Loaded ignored items JSON file: ignored_items.json")
-      -- Convert the list into a table with item names as keys for easier lookup
-      local ignoredItemsTable = {}
-      for _, itemName in ipairs(ignoredItemsList) do
-          ignoredItemsTable[itemName] = true
-      end
-      return ignoredItemsTable
+    Utils.DebugPrint(0, "Loaded ignored items JSON file: ignored_items.json")
+    -- Convert the list into a table with item names as keys for easier lookup
+    local ignoredItemsTable = {}
+    for _, itemName in ipairs(ignoredItemsList) do
+      ignoredItemsTable[itemName] = true
+    end
+    return ignoredItemsTable
   else
-      Utils.DebugPrint(1, "Ignored items JSON file not found: ignored_items.json")
-      return {}
+    Utils.DebugPrint(1, "Ignored items JSON file not found: ignored_items.json")
+    return {}
   end
 end
-
 
 IgnoredItems = Junk.LoadIgnoredItems()
 Utils.DebugPrint(1, "Loaded " .. tostring(#IgnoredItems) .. " ignored items")
