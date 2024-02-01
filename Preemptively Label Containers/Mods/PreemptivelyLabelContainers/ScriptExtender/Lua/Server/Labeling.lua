@@ -90,7 +90,7 @@ function SetNewLabel(container)
 
 
     local label = CreateLabel(itemCount, shouldDisplayNumberOfItems, addParentheses, capitalize)
-    if shouldSimulateController then -- and shouldDisplayNumberOfItems and itemCount ~= 0 then
+    if shouldSimulateController and label ~= "" then -- and shouldDisplayNumberOfItems and itemCount ~= 0 then
         label = String.PadString(label, 58, objectNameHandle)
     end
 
