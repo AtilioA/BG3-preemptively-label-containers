@@ -11,7 +11,9 @@ function Labeling.LabelNearbyContainers()
         local processed = EHandlers.processed_objects[member.Guid]
         local recentlyClosed = EHandlers.recently_closed[member.Guid]
         local isNewOrReopened = not processed or recentlyClosed
-        if isNewOrReopened then
+        local shouldSkipChecks = JsonConfig.DEBUG.always_relabel
+        
+        if isNewOrReopened or shouldSkipChecks then
             Utils.DebugPrint(2, "Processing object: " .. member.Guid)
             CheckAndRenameIfLootable(member.Guid)
             EHandlers.processed_objects[member.Guid] = true

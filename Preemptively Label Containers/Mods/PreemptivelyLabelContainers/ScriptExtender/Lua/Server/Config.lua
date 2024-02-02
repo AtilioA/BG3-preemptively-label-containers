@@ -11,6 +11,7 @@ Config.defaultConfig = {
         radius = 10,                     -- How far away to look for nearby containers (in meters) (controller search radius is 5)
         refresh_interval = 500,         -- How often to refresh the list of nearby containers (in milliseconds). Recommendation: set it between 250-2000, higher if you have a weaker CPU. (Labels are always immediately updated after container usage)
         labeling = {
+            always_relabel = true, -- Skip checks to update containers labels: always regenerate labels even if they are already labeled
             owned_containers = true,    -- Label containers owned by others (the ones that show a red highlight)
             -- remove_from_opened = false, -- Remove the label from containers that are opened by the player (good for controller users) (UNUSED)
             perception_check_dc = 0,    -- Perception check DC to label a container (0 = always succeed)
@@ -28,7 +29,6 @@ Config.defaultConfig = {
     },
     DEBUG = {
         level = 0,              -- 0 = no debug, 1 = minimal, 2 = verbose logs
-        always_relabel = false, -- Skip checks to label containers, always try even if they are already labeled (UNUSED)
     }
 }
 
