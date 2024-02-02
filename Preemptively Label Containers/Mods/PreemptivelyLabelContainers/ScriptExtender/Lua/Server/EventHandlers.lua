@@ -84,4 +84,9 @@ function EHandlers.OnMovedFromTo(movedObject, fromObject, toObject, isTrade)
   end
 end
 
+function EHandlers.OnCharacterDied(character)
+  Utils.DebugPrint(2, "OnCharacterDied: " .. character .. ". Removing from processed objects.")
+  EHandlers.processed_objects[character] = nil
+end
+
 return EHandlers
