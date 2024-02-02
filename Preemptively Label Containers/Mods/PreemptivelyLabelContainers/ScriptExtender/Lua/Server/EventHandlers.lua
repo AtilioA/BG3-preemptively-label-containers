@@ -39,7 +39,7 @@ function EHandlers.OnUseEnded(character, item, result)
     EHandlers.processed_objects[item] = nil
     -- if  CountFilteredItems(item) ~= 0 then
     -- Call function so that the container is relabeled immediately
-    CheckAndRenameIfLootable(item)
+    CheckAndRenameIfLootable(item, false)
     -- end
     -- if CountFilteredItems(item) == 0 then
     --   -- Call function so that the container is relabeled immediately
@@ -58,11 +58,12 @@ end
 function EHandlers.OnCharacterLootedCharacter(looter, character)
   if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and Loot.IsLootable(character) then
     Utils.DebugPrint(2, "OnCharacterLootedCharacter: " .. looter .. " " .. character)
+    -- Utils.DumpCharacterEntity(character)
     EHandlers.recently_closed[character] = true
     EHandlers.processed_objects[character] = nil
     -- if  CountFilteredCharacters(character) ~= 0 then
     -- Call function so that the container is relabeled immediately
-    CheckAndRenameIfLootable(character)
+    CheckAndRenameIfLootable(character, false)
     -- end
     -- if CountFilteredCharacters(character) == 0 then
     --   -- Call function so that the container is relabeled immediately

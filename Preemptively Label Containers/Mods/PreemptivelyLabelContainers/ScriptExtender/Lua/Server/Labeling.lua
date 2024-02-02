@@ -1,32 +1,56 @@
 Labeling = {}
 
 Labeling.EMPTY_STRING_HANDLE = "h823595e6g550fg4614gb1ddgdcd323bb4c69"
-
+Labeling.ACTIVE_SEARCH_RADIUS = 5
 
 function Labeling.LabelNearbyContainers()
-    local nearbyContainers = GetNearbyCharactersAndItems(Osi.GetHostCharacter(), JsonConfig.FEATURES.radius, true, true)
+    local hostCharacter = Osi.GetHostCharacter()
+    local shouldSimulateController = JsonConfig.FEATURES.label.simulate_controller
+    local radius = JsonConfig.FEATURES.radius
+    if shouldSimulateController then
+        radius = math.max(radius, Labeling.ACTIVE_SEARCH_RADIUS + 1)
+    end
+
+    local nearbyContainers = GetNearbyCharactersAndItems(hostCharacter, radius, true, true)
     Utils.DebugPrint(3, "Nearby items: " .. #nearbyContainers)
 
-    for _, member in ipairs(nearbyContainers) do
-        local processed = EHandlers.processed_objects[member.Guid]
-        local recentlyClosed = EHandlers.recently_closed[member.Guid]
-        local isNewOrReopened = not processed or recentlyClosed
-        local shouldSkipChecks = JsonConfig.DEBUG.always_relabel
-        
-        if isNewOrReopened or shouldSkipChecks then
-            Utils.DebugPrint(2, "Processing object: " .. member.Guid)
-            CheckAndRenameIfLootable(member.Guid)
-            EHandlers.processed_objects[member.Guid] = true
-            EHandlers.recently_closed[member.Guid] = nil
-        else
-            Utils.DebugPrint(3, "Object already processed: " .. member.Guid)
+    if not shouldSimulateController then
+        for _, member in ipairs(nearbyContainers) do
+            Labeling.ProcessContainer(member.Guid, false)
         end
+    else
+        -- REVIEW: Might be worth to replace with a binary search (I'm too hungry to think about it right now)
+        for _, member in ipairs(nearbyContainers) do
+            if member.Distance <= Labeling.ACTIVE_SEARCH_RADIUS then
+                -- First pass: Label with padding within the AS radius
+                Labeling.ProcessContainer(member.Guid, true)
+            elseif member.Distance > Labeling.ACTIVE_SEARCH_RADIUS then
+                -- Second pass: Label without padding outside AS radius, but within the configured radius
+                Labeling.ProcessContainer(member.Guid, false)
+            end
+        end
+    end
+end
+
+function Labeling.ProcessContainer(guid, shouldPadLabel)
+    local processed = EHandlers.processed_objects[guid]
+    local recentlyClosed = EHandlers.recently_closed[guid]
+    local isNewOrReopened = not processed or recentlyClosed
+    local shouldSkipChecks = JsonConfig.DEBUG.always_relabel or JsonConfig.FEATURES.label.simulate_controller
+
+    if shouldSkipChecks or isNewOrReopened then
+        Utils.DebugPrint(3, "Processing object: " .. guid)
+        CheckAndRenameIfLootable(guid, shouldPadLabel)
+        EHandlers.processed_objects[guid] = true
+        EHandlers.recently_closed[guid] = nil
+    else
+        Utils.DebugPrint(3, "Object already processed: " .. guid)
     end
 end
 
 -- Function to check if the container is empty and change its name
 -- TODO: object must not be in EHandlers.all_opened_containers. If it is, call RemoveEmptyName
-function CheckAndRenameIfLootable(object)
+function CheckAndRenameIfLootable(object, shouldPadLabel)
     local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or JsonConfig.FEATURES.labeling
         .owned_containers
     local shouldRemoveFromOpened = JsonConfig.FEATURES.labeling.remove_from_opened
@@ -39,8 +63,8 @@ function CheckAndRenameIfLootable(object)
                 Utils.DebugPrint(2, "Removing label for: " .. object)
                 RemoveLabel(object)
             else
-                Utils.DebugPrint(2, "Setting label for: " .. object)
-                SetNewLabel(object)
+                Utils.DebugPrint(3, "Setting label for: " .. object)
+                SetNewLabel(object, shouldPadLabel)
             end
         else
             Utils.DebugPrint(3, "Not labeling: " .. object)
@@ -77,7 +101,7 @@ end
 
 -- Function to set the container's name as empty or with item count
 ---@param container EntityHandle
-function SetNewLabel(container)
+function SetNewLabel(container, shouldPadLabel)
     -- Utils.DebugPrint(1, "Setting container label for: " .. container)
     local objectNameHandle = GetDisplayName(GetEntity(container))
     -- local name = Osi.ResolveTranslatedString(objectNameHandle)
@@ -87,22 +111,20 @@ function SetNewLabel(container)
     local addParentheses = JsonConfig.FEATURES.label.add_parentheses
     local capitalize = JsonConfig.FEATURES.label.capitalize
     local shouldAppend = JsonConfig.FEATURES.label.append
-    local shouldSimulateController = JsonConfig.FEATURES.label.simulate_controller
     local shouldDisplayNumberOfItems = JsonConfig.FEATURES.label.display_number_of_items
 
-
     local label = CreateLabel(itemCount, shouldDisplayNumberOfItems, addParentheses, capitalize)
-    if shouldSimulateController and label ~= "" then -- and shouldDisplayNumberOfItems and itemCount ~= 0 then
+    if shouldPadLabel and label ~= "" then -- and shouldDisplayNumberOfItems and itemCount ~= 0 then
         label = String.PadString(label, 58, objectNameHandle)
     end
 
-    Utils.DebugPrint(2, "Label: " .. label)
+    Utils.DebugPrint(3, "Label: " .. label)
 
     local entity = GetEntity(container)
     if entity ~= nil then
         if label ~= "" then
             local newDisplayName
-            if shouldAppend or shouldSimulateController then
+            if shouldAppend or shouldPadLabel then
                 newDisplayName = objectNameHandle .. " " .. label
             else
                 newDisplayName = label .. " " .. objectNameHandle
