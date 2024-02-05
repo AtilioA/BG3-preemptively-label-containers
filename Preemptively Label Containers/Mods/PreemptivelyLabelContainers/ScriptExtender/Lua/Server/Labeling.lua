@@ -2,16 +2,16 @@ Labeling = {}
 
 Labeling.EMPTY_STRING_HANDLE = "h823595e6g550fg4614gb1ddgdcd323bb4c69"
 Labeling.ACTIVE_SEARCH_RADIUS = 5
+Labeling.MIN_DISTANCE_PARTY_MEMBER = 8
 
-function Labeling.LabelNearbyContainers()
-    local hostCharacter = Osi.GetHostCharacter()
+function Labeling.LabelContainersNearbyCharacter(character)
     local shouldSimulateController = JsonConfig.FEATURES.label.simulate_controller
     local radius = JsonConfig.FEATURES.radius
     if shouldSimulateController then
         radius = math.max(radius, Labeling.ACTIVE_SEARCH_RADIUS + 1)
     end
 
-    local nearbyContainers = GetNearbyCharactersAndItems(hostCharacter, radius, true, true)
+    local nearbyContainers = GetNearbyCharactersAndItems(character, radius, true, true)
     Utils.DebugPrint(3, "Nearby items: " .. #nearbyContainers)
 
     if not shouldSimulateController then
@@ -29,6 +29,29 @@ function Labeling.LabelNearbyContainers()
                 Labeling.ProcessContainer(member.Guid, false)
             end
         end
+    end
+end
+
+function Labeling.LabelNearbyContainersForAllPartyMembers()
+    local partyMembers = Utils.GetPartyMembers()
+    local hostCharacter = Osi.GetHostCharacter()
+    local minDistance = math.max(Labeling.MIN_DISTANCE_PARTY_MEMBER, JsonConfig.FEATURES.radius)
+
+    Labeling.LabelContainersNearbyCharacter(hostCharacter)
+    for _, partyMember in ipairs(partyMembers) do
+        if Osi.GetDistanceTo(partyMember, hostCharacter) <= minDistance then
+            Labeling.LabelContainersNearbyCharacter(partyMember)
+        end
+    end
+end
+
+function Labeling.LabelNearbyContainers()
+    local shouldLabelAllPartyMembers = JsonConfig.FEATURES.also_check_for_party_members
+
+    if shouldLabelAllPartyMembers then
+        Labeling.LabelNearbyContainersForAllPartyMembers()
+    else
+        Labeling.LabelContainersNearbyCharacter(Osi.GetHostCharacter())
     end
 end
 
