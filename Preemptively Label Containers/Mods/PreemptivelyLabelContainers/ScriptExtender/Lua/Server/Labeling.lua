@@ -98,8 +98,8 @@ function Labeling.CheckAndRenameIfLootable(object, shouldPadLabel)
 end
 
 -- Function to create a label based on the item count
-local function CreateLabel(count, displayItemCount, addParentheses, capitalize)
-    if displayItemCount then
+local function CreateLabel(count, displayItemCount, displayCountIfEmpty, addParentheses, capitalize)
+    if displayItemCount and (count > 0 or displayCountIfEmpty) then
         return "(" .. count .. ")"
     elseif count == 0 then
         local translatedString = String.RemoveParentheses(Ext.Loca.GetTranslatedString(Labeling.EMPTY_STRING_HANDLE))
@@ -134,9 +134,10 @@ function SetNewLabel(container, shouldPadLabel)
     local addParentheses = JsonConfig.FEATURES.label.add_parentheses
     local capitalize = JsonConfig.FEATURES.label.capitalize
     local shouldAppend = JsonConfig.FEATURES.label.append
-    local shouldDisplayNumberOfItems = JsonConfig.FEATURES.label.display_number_of_items
+    local shouldDisplayNumberOfItems = JsonConfig.FEATURES.label.display_number_of_items.enabled
+    local displayCountIfEmpty = JsonConfig.FEATURES.label.display_number_of_items.if_empty
 
-    local label = CreateLabel(itemCount, shouldDisplayNumberOfItems, addParentheses, capitalize)
+    local label = CreateLabel(itemCount, shouldDisplayNumberOfItems, displayCountIfEmpty, addParentheses, capitalize)
     if shouldPadLabel and label ~= "" then -- and shouldDisplayNumberOfItems and itemCount ~= 0 then
         label = String.PadString(label, 58, objectNameHandle)
     end

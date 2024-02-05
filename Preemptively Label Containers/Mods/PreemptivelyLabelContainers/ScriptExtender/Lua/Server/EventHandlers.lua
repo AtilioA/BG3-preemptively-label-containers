@@ -26,6 +26,7 @@ end
 
 function EHandlers.OnUseStarted(character, item)
   if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and Loot.IsLootable(item) then
+    -- Utils.DumpCharacterEntity(item)
     Utils.DebugPrint(2, "UseStarted: " .. character .. " " .. item)
     EHandlers.all_opened_containers[item] = true
     -- EHandlers.processed_objects[item] = nil
