@@ -39,7 +39,7 @@ function EHandlers.OnUseEnded(character, item, result)
     EHandlers.processed_objects[item] = nil
     -- if  CountFilteredItems(item) ~= 0 then
     -- Call function so that the container is relabeled immediately
-    CheckAndRenameIfLootable(item, false)
+    Labeling.CheckAndRenameIfLootable(item, false)
     -- end
     -- if CountFilteredItems(item) == 0 then
     --   -- Call function so that the container is relabeled immediately
@@ -63,7 +63,7 @@ function EHandlers.OnCharacterLootedCharacter(looter, character)
     EHandlers.processed_objects[character] = nil
     -- if  CountFilteredCharacters(character) ~= 0 then
     -- Call function so that the container is relabeled immediately
-    CheckAndRenameIfLootable(character, false)
+    Labeling.CheckAndRenameIfLootable(character, false)
     -- end
     -- if CountFilteredCharacters(character) == 0 then
     --   -- Call function so that the container is relabeled immediately

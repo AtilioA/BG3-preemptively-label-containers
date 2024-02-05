@@ -40,7 +40,7 @@ function Labeling.ProcessContainer(guid, shouldPadLabel)
 
     if shouldSkipChecks or isNewOrReopened then
         Utils.DebugPrint(3, "Processing object: " .. guid)
-        CheckAndRenameIfLootable(guid, shouldPadLabel)
+        Labeling.CheckAndRenameIfLootable(guid, shouldPadLabel)
         EHandlers.processed_objects[guid] = true
         EHandlers.recently_closed[guid] = nil
     else
@@ -50,7 +50,7 @@ end
 
 -- Function to check if the container is empty and change its name
 -- TODO: object must not be in EHandlers.all_opened_containers. If it is, call RemoveEmptyName
-function CheckAndRenameIfLootable(object, shouldPadLabel)
+function Labeling.CheckAndRenameIfLootable(object, shouldPadLabel)
     local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or JsonConfig.FEATURES.labeling
         .owned_containers
     local shouldRemoveFromOpened = JsonConfig.FEATURES.labeling.remove_from_opened
