@@ -12,7 +12,7 @@ end
 
 function Loot.IsBuriedChest(object)
   local objectEntity = Ext.Entity.Get(object)
-  if objectEntity ~= nil then
+  if objectEntity and objectEntity.ServerItem and objectEntity.ServerItem.Template then
     local TemplateName = objectEntity.ServerItem.Template.Name
     if string.find(TemplateName, "BuriedChest") then
       return true
