@@ -17,18 +17,6 @@ function Loot.IsBuriedChest(object)
     if string.find(TemplateName, "BuriedChest") then
       return true
     end
-
-    -- local StatusContainer = objectEntity.StatusContainer
-    local isSurfaceChest = false
-    -- if StatusContainer ~= nil then
-    --   local Statuses = StatusContainer.Statuses
-    --   for _key, Status in pairs(Statuses) do
-    --     if Status == "INSURFACE" then
-    --       isSurfaceChest = true
-    --     end
-    --   end
-
-    return not isSurfaceChest
   end
 end
 
