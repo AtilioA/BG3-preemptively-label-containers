@@ -23,7 +23,7 @@ Config.defaultConfig = {
             append = true,               -- Adds the label after the container's name (false = prepends the label)
             simulate_controller = false, -- Simulate controller '(Empty)' label seen in controller UI search results. Will look bad in KB/M UI.
             display_number_of_items = {
-                enabled = true,          -- Display the number of items in the container
+                enabled = false,         -- Display the number of items in the container
                 if_empty = true,         -- Show the number of items even if the container is empty
             }
         },
