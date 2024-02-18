@@ -167,7 +167,6 @@ function SetNewLabel(container, shouldPadLabel)
             else
                 newDisplayName = label .. " " .. objectNameHandle
             end
-            _D(entity.Vars)
             if entity.Vars.PLCOriginalName == nil then
                 Utils.DebugPrint(2, "Setting original name for: " .. objectNameHandle)
                 entity.Vars.PLCOriginalName = objectNameHandle

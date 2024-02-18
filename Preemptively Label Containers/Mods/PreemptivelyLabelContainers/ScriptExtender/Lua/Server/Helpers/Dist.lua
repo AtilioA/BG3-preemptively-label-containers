@@ -116,7 +116,6 @@ function GetDisplayName(entity)
     local name = ""
     if entity.DisplayName ~= nil then
         name = Ext.Loca.GetTranslatedString(entity.DisplayName.NameKey.Handle.Handle)
-        -- _D(name)
         if name == nil then
             name = entity.DisplayName.Name
             -- if (name == "" or name == nil) and self.IsServer then

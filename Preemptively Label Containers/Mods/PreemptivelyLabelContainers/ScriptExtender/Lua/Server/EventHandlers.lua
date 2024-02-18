@@ -9,7 +9,7 @@ EHandlers.processed_objects = {}
 function EHandlers.OnGainedControl(character)
   -- Utils.DumpCharacterEntity(character)
   -- Utils.DebugPrint(2, Osi.CalculatePassiveSkill(character, "Perception"))
-  Labeling.UpdateAllEntities()
+  -- Labeling.UpdateAllEntities()
   Labeling.LabelNearbyContainers()
   Osi.TimerLaunch("RenameContainers", JsonConfig.FEATURES.refresh_interval)
 end
