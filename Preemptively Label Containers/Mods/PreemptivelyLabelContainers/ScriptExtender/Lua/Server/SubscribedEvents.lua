@@ -2,6 +2,8 @@ local function SubscribeToEvents()
   if JsonConfig.GENERAL.enabled == true then
     Utils.DebugPrint(2, "Subscribing to events with JSON config: " .. Ext.Json.Stringify(JsonConfig, { Beautify = true }))
 
+    Ext.Events.GameStateChanged:Subscribe(EHandlers.OnGameStateChange)
+
     Ext.Osiris.RegisterListener("GainedControl", 1, "after", EHandlers.OnGainedControl)
 
     Ext.Osiris.RegisterListener("TimerFinished", 1, "after", EHandlers.OnTimerFinished)

@@ -9,6 +9,7 @@ EHandlers.processed_objects = {}
 function EHandlers.OnGainedControl(character)
   -- Utils.DumpCharacterEntity(character)
   -- Utils.DebugPrint(2, Osi.CalculatePassiveSkill(character, "Perception"))
+  Labeling.UpdateAllEntities()
   Labeling.LabelNearbyContainers()
   Osi.TimerLaunch("RenameContainers", JsonConfig.FEATURES.refresh_interval)
 end
@@ -18,7 +19,7 @@ function EHandlers.OnTimerFinished(timerName)
     return
   end
 
-  Utils.DebugPrint(2, "Timer finished: " .. timerName)
+  Utils.DebugPrint(3, "Timer finished: " .. timerName)
   Labeling.LabelNearbyContainers()
 
   Osi.TimerLaunch("RenameContainers", JsonConfig.FEATURES.refresh_interval)
@@ -89,6 +90,12 @@ end
 function EHandlers.OnCharacterDied(character)
   Utils.DebugPrint(2, "OnCharacterDied: " .. character .. ". Removing from processed objects.")
   EHandlers.processed_objects[character] = nil
+end
+
+function EHandlers.OnGameStateChange(gameState)
+  if gameState.FromState == "LoadLevel" and gameState.ToState == "Sync" then
+    Labeling.UpdateAllEntities()
+  end
 end
 
 return EHandlers

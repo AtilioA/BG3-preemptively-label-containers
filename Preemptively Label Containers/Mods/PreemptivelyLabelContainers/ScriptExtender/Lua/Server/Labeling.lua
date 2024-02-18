@@ -4,6 +4,18 @@ Labeling.EMPTY_STRING_HANDLE = "h823595e6g550fg4614gb1ddgdcd323bb4c69"
 Labeling.ACTIVE_SEARCH_RADIUS = 5
 Labeling.MIN_DISTANCE_PARTY_MEMBER = 8
 
+function Labeling.UpdateAllEntities()
+    local namedEntities = Ext.Entity.GetAllEntitiesWithComponent("DisplayName")
+    -- Check if they have your uservar set, e.g. if entity.Vars.PLCOriginalName ~= nil then. If the name is set, then set the entity's name to your saved name. You can call Osi.SetStoryDisplayName again to do this.
+    for _, entity in ipairs(namedEntities) do
+        local originalName = entity.Vars.PLCOriginalName
+        if originalName ~= nil then
+            Utils.DebugPrint(2, "Initializing name for: " .. originalName)
+            Osi.SetStoryDisplayName(entity.Uuid.EntityUuid, originalName)
+        end
+    end
+end
+
 function Labeling.LabelContainersNearbyCharacter(character)
     local shouldSimulateController = JsonConfig.FEATURES.label.simulate_controller
     local radius = JsonConfig.FEATURES.radius
@@ -125,8 +137,9 @@ end
 -- Function to set the container's name as empty or with item count
 ---@param container EntityHandle
 function SetNewLabel(container, shouldPadLabel)
+    local entity = GetEntity(container)
     -- Utils.DebugPrint(1, "Setting container label for: " .. container)
-    local objectNameHandle = GetDisplayName(GetEntity(container))
+    local objectNameHandle = entity.Vars.PLCOriginalName or GetDisplayName(entity)
     -- local name = Osi.ResolveTranslatedString(objectNameHandle)
     -- Utils.DebugPrint(2, "Container name: " .. name)
     local itemCount = CountFilteredItems(container)
@@ -144,17 +157,29 @@ function SetNewLabel(container, shouldPadLabel)
 
     Utils.DebugPrint(3, "Label: " .. label)
 
-    local entity = GetEntity(container)
     if entity ~= nil then
         if label ~= "" then
             local newDisplayName
+            -- Remove newDisplayName from the objectNameHandle string if it's already there
+            newDisplayName = string.gsub(objectNameHandle, label, "")
             if shouldAppend or shouldPadLabel then
                 newDisplayName = objectNameHandle .. " " .. label
             else
                 newDisplayName = label .. " " .. objectNameHandle
             end
-            entity.DisplayName.Name = newDisplayName
-            entity:Replicate("DisplayName")
+            _D(entity.Vars)
+            if entity.Vars.PLCOriginalName == nil then
+                Utils.DebugPrint(2, "Setting original name for: " .. objectNameHandle)
+                entity.Vars.PLCOriginalName = objectNameHandle
+            end
+
+            if label and string.find(objectNameHandle, label) ~= nil then
+                Utils.DebugPrint(2, "Label already set for: " .. objectNameHandle)
+                Osi.SetStoryDisplayName(entity.Uuid.EntityUuid, tostring(newDisplayName))
+            else
+                Utils.DebugPrint(2, "Setting new name for: " .. objectNameHandle .. " to " .. newDisplayName)
+                Osi.SetStoryDisplayName(entity.Uuid.EntityUuid, tostring(newDisplayName))
+            end
         end
     else -- This is a temporary workaround for containers that are not yet loaded
         Utils.DebugPrint(2, "Entity is nil")
@@ -166,9 +191,8 @@ end
 ---@param entity EntityHandle
 function RemoveLabel(entityHandle)
     local entity = Ext.Entity.Get(entityHandle)
-    -- Utils.DebugPrint(2, "Removing label for: " .. entity)
-    entity.DisplayName.Name = ""
-    entity:Replicate("DisplayName")
+    Utils.DebugPrint(2, "Removing label for: " .. entity)
+    Osi.SetStoryDisplayName(entity.Uuid.EntityUuid, entity.Vars.PLCOriginalName)
 end
 
 return Labeling
