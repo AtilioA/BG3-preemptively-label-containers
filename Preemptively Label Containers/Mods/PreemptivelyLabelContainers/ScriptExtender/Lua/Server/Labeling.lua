@@ -4,7 +4,8 @@ Labeling.EMPTY_STRING_HANDLE = "h823595e6g550fg4614gb1ddgdcd323bb4c69"
 Labeling.ACTIVE_SEARCH_RADIUS = 5
 Labeling.MIN_DISTANCE_PARTY_MEMBER = 8
 
-function Labeling.UpdateAllEntities()
+--- Iterate all entities that have a DisplayName component and restore their original names (stored in entity.Vars.PLCOriginalName, if available)
+function Labeling.RestoreEntitiesLabels()
     local namedEntities = Ext.Entity.GetAllEntitiesWithComponent("DisplayName")
     -- Check if they have your uservar set, e.g. if entity.Vars.PLCOriginalName ~= nil then. If the name is set, then set the entity's name to your saved name. You can call Osi.SetStoryDisplayName again to do this.
     for _, entity in ipairs(namedEntities) do

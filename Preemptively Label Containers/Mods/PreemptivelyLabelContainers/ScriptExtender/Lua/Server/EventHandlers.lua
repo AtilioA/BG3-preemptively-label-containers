@@ -7,7 +7,7 @@ EHandlers.processed_objects = {}
 
 -- Initializes a timer on gaining control
 function EHandlers.OnGainedControl(character)
-  -- Labeling.UpdateAllEntities()
+  -- Labeling.RestoreEntitiesLabels()
   Labeling.LabelNearbyContainers()
   Osi.TimerLaunch("RenameContainers", JsonConfig.FEATURES.refresh_interval)
 end
@@ -96,7 +96,8 @@ end
 
 function EHandlers.OnGameStateChange(gameState)
   if gameState.FromState == "LoadLevel" and gameState.ToState == "Sync" then
-    Labeling.UpdateAllEntities()
+    Labeling.RestoreEntitiesLabels()
+    Labeling.LabelNearbyContainers()
   end
 end
 

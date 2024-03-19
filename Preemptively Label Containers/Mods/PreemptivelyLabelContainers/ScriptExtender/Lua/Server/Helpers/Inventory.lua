@@ -166,9 +166,9 @@ function ItemIsInPartyInventory(item, holder)
     local itemEntity = GetEntity(item)
     local holderEntity = GetEntity(holder)
 
-    if Osi.IsInPartyWith(holderEntity.Uuid.EntityUuid, Osi.GetHostCharacter()) == 1 then
-        return true
-    end
+    -- if Osi.IsInPartyWith(holderEntity.Uuid.EntityUuid, Osi.GetHostCharacter()) == 1 then
+    --     return true
+    -- end
 
     if itemEntity ~= nil and holderEntity ~= nil then
         local parentInventory = itemEntity.InventoryMember and
