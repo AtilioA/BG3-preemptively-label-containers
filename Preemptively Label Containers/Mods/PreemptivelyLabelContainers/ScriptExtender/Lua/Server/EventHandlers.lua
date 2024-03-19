@@ -7,8 +7,6 @@ EHandlers.processed_objects = {}
 
 -- Initializes a timer on gaining control
 function EHandlers.OnGainedControl(character)
-  -- Utils.DumpCharacterEntity(character)
-  -- Utils.DebugPrint(2, Osi.CalculatePassiveSkill(character, "Perception"))
   -- Labeling.UpdateAllEntities()
   Labeling.LabelNearbyContainers()
   Osi.TimerLaunch("RenameContainers", JsonConfig.FEATURES.refresh_interval)
@@ -41,7 +39,11 @@ function EHandlers.OnUseEnded(character, item, result)
     EHandlers.processed_objects[item] = nil
     -- if  CountFilteredItems(item) ~= 0 then
     -- Call function so that the container is relabeled immediately
-    Labeling.CheckAndRenameIfLootable(item, false)
+    if not ItemIsInPartyInventory(item, character) then
+      Labeling.LabelContainersNearbyCharacter(character)
+    else
+      Utils.DebugPrint(2, "Not relabeling " .. item .. " because it's in the party's inventory.")
+    end
     -- end
     -- if CountFilteredItems(item) == 0 then
     --   -- Call function so that the container is relabeled immediately

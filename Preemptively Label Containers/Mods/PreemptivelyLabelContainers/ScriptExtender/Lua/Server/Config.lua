@@ -32,7 +32,7 @@ Config.defaultConfig = {
         },
     },
     DEBUG = {
-        level = 0, -- 0 = no debug, 1 = minimal, 2 = verbose logs
+        level = 0, -- 0 = no debug, 1 = minimal, 2 = verbose debug logs
     }
 }
 
