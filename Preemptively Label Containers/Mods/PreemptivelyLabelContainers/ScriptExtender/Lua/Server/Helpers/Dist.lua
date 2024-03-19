@@ -71,15 +71,17 @@ function GetNearbyContainers(source, radius, ignoreHeight, includeInSourceInvent
         end
     else
         for _, item in ipairs(Ext.Entity.GetAllEntitiesWithComponent("IsItem")) do
-            local distance = GetDistance(pos, item.Transform.Transform.Translate, ignoreHeight)
-            if distance <= radius and not Helpers.Inventory:ItemIsInInventory(item, sourceEntity) then
-                table.insert(nearbyEntities, {
-                    Entity = item,
-                    Guid = item.Uuid.EntityUuid,
-                    Distance = distance,
-                    Name = Ext.Loca.GetTranslatedString(item.DisplayName.NameKey.Handle.Handle),
-                    TemplateId = item.ServerItem.Template.Id
-                })
+            if item.Transform and item.Transform.Transform then
+                local distance = GetDistance(pos, item.Transform.Transform.Translate, ignoreHeight)
+                if distance <= radius and not ItemIsInPartyInventory(item, sourceEntity) then
+                    table.insert(nearbyEntities, {
+                        Entity = item,
+                        Guid = item.Uuid.EntityUuid,
+                        Distance = distance,
+                        Name = Ext.Loca.GetTranslatedString(item.DisplayName.NameKey.Handle.Handle),
+                        TemplateId = item.ServerItem.Template.Id
+                    })
+                end
             end
         end
     end
