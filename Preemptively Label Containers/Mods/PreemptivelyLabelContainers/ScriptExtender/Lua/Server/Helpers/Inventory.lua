@@ -162,6 +162,30 @@ function GetInventory(object, primaryOnly, shallow)
     return items
 end
 
+function ItemIsInPartyInventory(item, holder)
+    local itemEntity = GetEntity(item)
+    local holderEntity = GetEntity(holder)
+
+    if Osi.IsInPartyWith(holderEntity.Uuid.EntityUuid, Osi.GetHostCharacter()) == 1 then
+        return true
+    end
+
+    if itemEntity ~= nil and holderEntity ~= nil then
+        local parentInventory = itemEntity.InventoryMember and
+            itemEntity.InventoryMember.Inventory.InventoryIsOwned.Owner
+        while parentInventory do
+            if parentInventory == holderEntity then
+                return true
+            else
+                parentInventory = parentInventory.InventoryMember and
+                    parentInventory.InventoryMember.Inventory.InventoryIsOwned.Owner
+            end
+        end
+    end
+
+    return false
+end
+
 function FilterOutIgnoredItems(items)
     local filteredItems = {}
     for _, item in ipairs(items) do

@@ -17,13 +17,18 @@ function Labeling.UpdateAllEntities()
 end
 
 function Labeling.LabelContainersNearbyCharacter(character)
+    if Utils.IsCharacterInCamp(character) then
+        Utils.DebugPrint(3, "Character is in camp, skipping labeling")
+        return
+    end
+
     local shouldSimulateController = JsonConfig.FEATURES.label.simulate_controller
     local radius = JsonConfig.FEATURES.radius
     if shouldSimulateController then
         radius = math.max(radius, Labeling.ACTIVE_SEARCH_RADIUS + 1)
     end
 
-    local nearbyContainers = GetNearbyCharactersAndItems(character, radius, true, true)
+    local nearbyContainers = GetNearbyCharactersAndItems(character, radius, false, false)
     Utils.DebugPrint(3, "Nearby items: " .. #nearbyContainers)
 
     if not shouldSimulateController then

@@ -20,7 +20,7 @@ end
 ---@return string
 function Utils.GetUID(templateuuid)
   if #templateuuid <= 36 then
-      return templateuuid -- Return the original string if it's too short
+    return templateuuid   -- Return the original string if it's too short
   end
 
   local result = string.sub(templateuuid, 1, -37) -- Remove last 36 characters
@@ -48,11 +48,16 @@ function Utils.GetPlayerEntity()
   return Ext.Entity.Get(Osi.GetHostCharacter())
 end
 
-function Utils.DumpCharacterEntity(character)
+function Utils.DumpObjectEntity(object)
   if JsonConfig.DEBUG.level >= 2 then
-    local charEntity = Ext.Entity.Get(character)
-    Ext.IO.SaveFile('character-entity-PreemptivelyLabelContainers.json', Ext.DumpExport(charEntity:GetAllComponents()))
+    local objectEntity = Ext.Entity.Get(object)
+    Ext.IO.SaveFile('object-entity-PreemptivelyLabelContainers.json', Ext.DumpExport(objectEntity:GetAllComponents()))
   end
+end
+
+function Utils.IsCharacterInCamp(character)
+  local characterEntity = Ext.Entity.Get(character)
+  return characterEntity.CampPresence ~= nil
 end
 
 return Utils
