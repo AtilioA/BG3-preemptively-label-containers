@@ -13,7 +13,7 @@ function Labeling.LabelContainersNearbyCharacter(character)
     end
 
     local nearbyContainers = VCHelpers.Object:GetNearbyCharactersAndItems(character, radius, true, true)
-    Utils.DebugPrint(3, "Nearby items: " .. #nearbyContainers)
+    PLCPrint(3, "Nearby items: " .. #nearbyContainers)
 
     if not shouldSimulateController then
         for _, member in ipairs(nearbyContainers) do
@@ -64,12 +64,12 @@ function Labeling.ProcessContainer(guid, shouldPadLabel)
         Config:getCfg().FEATURES.label.simulate_controller
 
     if shouldSkipChecks or isNewOrReopened then
-        Utils.DebugPrint(3, "Processing object: " .. guid)
+        PLCPrint(3, "Processing object: " .. guid)
         Labeling.CheckAndRenameIfLootable(guid, shouldPadLabel)
         EHandlers.processed_objects[guid] = true
         EHandlers.recently_closed[guid] = nil
     else
-        Utils.DebugPrint(3, "Object already processed: " .. guid)
+        PLCPrint(3, "Object already processed: " .. guid)
     end
 end
 
@@ -85,17 +85,17 @@ function Labeling.CheckAndRenameIfLootable(object, shouldPadLabel)
         if VCHelpers.Lootable:IsLootable(object) and shouldLabelOwned then
             -- This will also remove numeric labels (i.e., not only Empty labels)
             if shouldRemoveFromOpened and EHandlers.all_opened_containers[object] then
-                Utils.DebugPrint(2, "Removing label for: " .. object)
+                PLCPrint(2, "Removing label for: " .. object)
                 RemoveLabel(object)
             else
-                Utils.DebugPrint(3, "Setting label for: " .. object)
+                PLCPrint(3, "Setting label for: " .. object)
                 SetNewLabel(object, shouldPadLabel)
             end
         else
-            Utils.DebugPrint(3, "Not labeling: " .. object)
+            PLCPrint(3, "Not labeling: " .. object)
         end
     else
-        Utils.DebugPrint(2, "Failed perception check for: " .. object)
+        PLCPrint(2, "Failed perception check for: " .. object)
     end
 end
 
@@ -138,11 +138,11 @@ end
 -- Function to set the container's name as empty or with item count
 ---@param container EntityHandle
 function SetNewLabel(container, shouldPadLabel)
-    -- Utils.DebugPrint(1, "Setting container label for: " .. container)
+    -- PLCPrint(1, "Setting container label for: " .. container)
     local objectNameHandle = VCHelpers.Object:GetEntity(container).DisplayName.NameKey.Handle.Handle
     local originalName = Ext.Loca.GetTranslatedString(RemoveLabelFromHandle(objectNameHandle))
     -- local name = Osi.ResolveTranslatedString(objectNameHandle)
-    -- Utils.DebugPrint(2, "Container name: " .. name)
+    -- PLCPrint(2, "Container name: " .. name)
     local itemCount = CountFilteredItems(container)
 
     local addParentheses = Config:getCfg().FEATURES.label.add_parentheses
@@ -156,7 +156,7 @@ function SetNewLabel(container, shouldPadLabel)
         label = LabelString.PadString(label, 58, originalName)
     end
 
-    Utils.DebugPrint(3, "Label: " .. label)
+    PLCPrint(3, "Label: " .. label)
 
     local entity = VCHelpers.Object:GetEntity(container)
     if entity ~= nil then
@@ -173,7 +173,7 @@ function SetNewLabel(container, shouldPadLabel)
             entity:Replicate("DisplayName")
         end
     else -- This is a temporary workaround for containers that are not yet loaded
-        Utils.DebugPrint(2, "Entity is nil")
+        PLCPrint(2, "Entity is nil")
     end
 end
 
@@ -182,7 +182,7 @@ end
 ---@param entity EntityHandle
 function RemoveLabel(entityHandle)
     local entity = Ext.Entity.Get(entityHandle)
-    -- Utils.DebugPrint(2, "Removing label for: " .. entity)
+    -- PLCPrint(2, "Removing label for: " .. entity)
     entity.DisplayName.NameKey.Handle.Handle = RemoveLabelFromHandle(entity.DisplayName.NameKey.Handle.Handle)
     entity:Replicate("DisplayName")
 end
