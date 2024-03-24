@@ -133,6 +133,15 @@ function RemoveLabelFromHandle(stringHandle)
     return stringHandle:gsub(Labeling.HANDLE_LABEL, "")
 end
 
+--- Return the handle if it has the Labeling.HANDLE_LABEL, otherwise return call CreateLabeledHandle
+function GetLabeledHandle(stringHandle)
+    if stringHandle:find(Labeling.HANDLE_LABEL) then
+        return stringHandle
+    else
+        return CreateLabeledHandle(stringHandle)
+    end
+end
+
 -- Function to set the container's name as empty or with item count
 ---@param container EntityHandle
 function SetNewLabel(container, shouldPadLabel)
@@ -165,7 +174,7 @@ function SetNewLabel(container, shouldPadLabel)
             else
                 newDisplayName = label .. " " .. originalName
             end
-            local labeledHandle = CreateLabeledHandle(entity.DisplayName.NameKey.Handle.Handle)
+            local labeledHandle = GetLabeledHandle(entity.DisplayName.NameKey.Handle.Handle)
             Ext.Loca.UpdateTranslatedString(labeledHandle, newDisplayName)
             entity.DisplayName.NameKey.Handle.Handle = labeledHandle
             entity:Replicate("DisplayName")
