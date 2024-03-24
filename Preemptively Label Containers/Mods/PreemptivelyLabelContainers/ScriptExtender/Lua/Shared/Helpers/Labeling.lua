@@ -74,7 +74,6 @@ function Labeling.ProcessContainer(guid, shouldPadLabel)
 end
 
 -- Function to check if the container is empty and change its name
--- TODO: object must not be in EHandlers.all_opened_containers. If it is, call RemoveEmptyName
 function Labeling.CheckAndRenameIfLootable(object, shouldPadLabel)
     local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or Config:getCfg().FEATURES.labeling
         .owned_containers
@@ -123,7 +122,6 @@ local function CreateLabel(count, displayItemCount, displayCountIfEmpty, addPare
         return ""
     end
 end
-
 
 --- Add the Labeling.HANDLE_LABEL to the stringHandle
 function CreateLabeledHandle(stringHandle)

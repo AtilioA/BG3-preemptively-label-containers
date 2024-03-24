@@ -9,7 +9,6 @@ function SubscribedEvents.SubscribeToEvents()
 
     Ext.Osiris.RegisterListener("TimerFinished", 1, "after", EHandlers.OnTimerFinished)
 
-    -- if Config:getCfg().FEATURES.label.simulate_controller then
     Ext.Osiris.RegisterListener("UseStarted", 2, "before", EHandlers.OnUseStarted)
     Ext.Osiris.RegisterListener("UseFinished", 3, "before", EHandlers.OnUseEnded)
 

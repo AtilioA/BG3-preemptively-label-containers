@@ -3,7 +3,6 @@ RequireFiles("Shared/Helpers/", {
   "Printer",
   "Junk",
   "LabelString",
-  "Inventory",
   "Dice",
   "Labeling",
 })
