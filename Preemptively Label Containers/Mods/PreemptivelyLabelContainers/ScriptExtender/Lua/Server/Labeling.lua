@@ -3,6 +3,7 @@ Labeling = {}
 Labeling.EMPTY_STRING_HANDLE = "h823595e6g550fg4614gb1ddgdcd323bb4c69"
 Labeling.ACTIVE_SEARCH_RADIUS = 5
 Labeling.MIN_DISTANCE_PARTY_MEMBER = 8
+Labeling.HANDLE_LABEL = '_PLC_labeled'
 
 function Labeling.LabelContainersNearbyCharacter(character)
     local shouldSimulateController = JsonConfig.FEATURES.label.simulate_controller
@@ -122,11 +123,23 @@ local function CreateLabel(count, displayItemCount, displayCountIfEmpty, addPare
     end
 end
 
+
+--- Add the Labeling.HANDLE_LABEL to the stringHandle
+function CreateLabeledHandle(stringHandle)
+    return stringHandle .. Labeling.HANDLE_LABEL
+end
+
+--- Remove the Labeling.HANDLE_LABEL from the stringHandle
+function RemoveLabelFromHandle(stringHandle)
+    return stringHandle:gsub(Labeling.HANDLE_LABEL, "")
+end
+
 -- Function to set the container's name as empty or with item count
 ---@param container EntityHandle
 function SetNewLabel(container, shouldPadLabel)
     -- Utils.DebugPrint(1, "Setting container label for: " .. container)
-    local objectNameHandle = GetDisplayName(GetEntity(container))
+    local objectNameHandle = GetEntity(container).DisplayName.NameKey.Handle.Handle
+    local originalName = Ext.Loca.GetTranslatedString(RemoveLabelFromHandle(objectNameHandle))
     -- local name = Osi.ResolveTranslatedString(objectNameHandle)
     -- Utils.DebugPrint(2, "Container name: " .. name)
     local itemCount = CountFilteredItems(container)
@@ -139,7 +152,7 @@ function SetNewLabel(container, shouldPadLabel)
 
     local label = CreateLabel(itemCount, shouldDisplayNumberOfItems, displayCountIfEmpty, addParentheses, capitalize)
     if shouldPadLabel and label ~= "" then -- and shouldDisplayNumberOfItems and itemCount ~= 0 then
-        label = String.PadString(label, 58, objectNameHandle)
+        label = String.PadString(label, 58, originalName)
     end
 
     Utils.DebugPrint(3, "Label: " .. label)
@@ -149,11 +162,13 @@ function SetNewLabel(container, shouldPadLabel)
         if label ~= "" then
             local newDisplayName
             if shouldAppend or shouldPadLabel then
-                newDisplayName = objectNameHandle .. " " .. label
+                newDisplayName = originalName .. " " .. label
             else
-                newDisplayName = label .. " " .. objectNameHandle
+                newDisplayName = label .. " " .. originalName
             end
-            entity.DisplayName.Name = newDisplayName
+            local labeledHandle = CreateLabeledHandle(entity.DisplayName.NameKey.Handle.Handle)
+            Ext.Loca.UpdateTranslatedString(labeledHandle, newDisplayName)
+            entity.DisplayName.NameKey.Handle.Handle = labeledHandle
             entity:Replicate("DisplayName")
         end
     else -- This is a temporary workaround for containers that are not yet loaded
@@ -167,7 +182,7 @@ end
 function RemoveLabel(entityHandle)
     local entity = Ext.Entity.Get(entityHandle)
     -- Utils.DebugPrint(2, "Removing label for: " .. entity)
-    entity.DisplayName.Name = ""
+    entity.DisplayName.NameKey.Handle.Handle = RemoveLabelFromHandle(entity.DisplayName.NameKey.Handle.Handle)
     entity:Replicate("DisplayName")
 end
 
