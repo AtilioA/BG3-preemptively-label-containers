@@ -1,4 +1,4 @@
-String = {}
+LabelString = {}
 
 -- Character width mapping
 local charWidths = {
@@ -97,10 +97,10 @@ local function estimateStringWidth(str)
 end
 
 -- Function to pad a string with spaces to match a specified width
-function String.PadString(str, targetWidth, newString)
+function LabelString.PadString(str, targetWidth, newString)
   -- Function to calculate extra padding based on the length of 'newString'
   function calculateExtraPadding(newStringLength)
-    local maxLength = 10          -- Length at which extra padding becomes 0
+    local maxLength = 10             -- Length at which extra padding becomes 0
     local maxExtraPaddingSpaces = 14 -- Maximum extra padding in spaces
 
     if newStringLength >= maxLength then
@@ -120,9 +120,9 @@ function String.PadString(str, targetWidth, newString)
   local spaceWidth = charWidths[' ']
   local extraPaddingSpaces = 0
   if newString then
-      local newStringWidth = estimateStringWidth(newString)
-      extraPaddingSpaces = calculateExtraPadding(#newString)  -- Get extra padding based on length of newString
-      strWidth = strWidth + newStringWidth - (extraPaddingSpaces * spaceWidth)
+    local newStringWidth = estimateStringWidth(newString)
+    extraPaddingSpaces = calculateExtraPadding(#newString) -- Get extra padding based on length of newString
+    strWidth = strWidth + newStringWidth - (extraPaddingSpaces * spaceWidth)
   end
 
   local paddingSize = targetWidth - strWidth
@@ -131,7 +131,7 @@ function String.PadString(str, targetWidth, newString)
 end
 
 --- Add parentheses around a string if it does not already have them
-function String.AddParentheses(str)
+function LabelString.AddParentheses(str)
   if string.match(str, "%(.*%)") then
     return str
   else
@@ -140,18 +140,8 @@ function String.AddParentheses(str)
 end
 
 -- Remove parentheses around a string if it has them
-function String.RemoveParentheses(str)
+function LabelString.RemoveParentheses(str)
   return string.gsub(str, "%s*%(%s*(.*)%s*%)", "%1")
 end
 
--- Capitalize the first letter of a string
-function String.Capitalize(str)
-  return str:gsub("^%l", string.upper)
-end
-
--- Lowercase the first letter of a string
-function String.Lowercase(str)
-  return str:gsub("^%u", string.lower)
-end
-
-return String
+return LabelString

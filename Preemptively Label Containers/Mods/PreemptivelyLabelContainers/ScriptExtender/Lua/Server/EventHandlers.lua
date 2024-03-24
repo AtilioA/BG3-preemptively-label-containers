@@ -10,7 +10,7 @@ function EHandlers.OnGainedControl(character)
   -- Utils.DumpCharacterEntity(character)
   -- Utils.DebugPrint(2, Osi.CalculatePassiveSkill(character, "Perception"))
   Labeling.LabelNearbyContainers()
-  Osi.TimerLaunch("RenameContainers", JsonConfig.FEATURES.refresh_interval)
+  Osi.TimerLaunch("RenameContainers", Config:getCfg().FEATURES.refresh_interval)
 end
 
 function EHandlers.OnTimerFinished(timerName)
@@ -21,11 +21,11 @@ function EHandlers.OnTimerFinished(timerName)
   Utils.DebugPrint(2, "Timer finished: " .. timerName)
   Labeling.LabelNearbyContainers()
 
-  Osi.TimerLaunch("RenameContainers", JsonConfig.FEATURES.refresh_interval)
+  Osi.TimerLaunch("RenameContainers", Config:getCfg().FEATURES.refresh_interval)
 end
 
 function EHandlers.OnUseStarted(character, item)
-  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and Loot.IsLootable(item) then
+  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and VCHelpers.Lootable:IsLootable(item) then
     -- Utils.DumpCharacterEntity(item)
     Utils.DebugPrint(2, "UseStarted: " .. character .. " " .. item)
     EHandlers.all_opened_containers[item] = true
@@ -34,7 +34,7 @@ function EHandlers.OnUseStarted(character, item)
 end
 
 function EHandlers.OnUseEnded(character, item, result)
-  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and Loot.IsLootable(item) then
+  if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and VCHelpers.Lootable:IsLootable(item) then
     Utils.DebugPrint(2, "UseEnded: " .. character .. " " .. item .. " " .. result)
     EHandlers.recently_closed[item] = true
     EHandlers.processed_objects[item] = nil
@@ -49,7 +49,7 @@ function EHandlers.OnUseEnded(character, item, result)
 end
 
 function EHandlers.OnRequestCanLoot(looter, character)
-  if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and Loot.IsLootable(character) then
+  if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and VCHelpers.Lootable:IsLootable(character) then
     Utils.DebugPrint(2, "OnRequestCanLoot: " .. looter .. " " .. character)
     EHandlers.all_opened_containers[character] = true
     -- EHandlers.processed_objects[character] = nil
@@ -57,7 +57,7 @@ function EHandlers.OnRequestCanLoot(looter, character)
 end
 
 function EHandlers.OnCharacterLootedCharacter(looter, character)
-  if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and Loot.IsLootable(character) then
+  if Osi.IsInPartyWith(looter, Osi.GetHostCharacter()) == 1 and VCHelpers.Lootable:IsLootable(character) then
     Utils.DebugPrint(2, "OnCharacterLootedCharacter: " .. looter .. " " .. character)
     -- Utils.DumpCharacterEntity(character)
     EHandlers.recently_closed[character] = true
@@ -76,8 +76,8 @@ end
 function EHandlers.OnMovedFromTo(movedObject, fromObject, toObject, isTrade)
   Utils.DebugPrint(2, "OnMovedFromTo: " .. movedObject .. " " .. fromObject .. " " .. toObject .. " " .. isTrade)
   if Osi.IsInPartyWith(Osi.GetHostCharacter(), fromObject) == 1 and isTrade == 0 then
-    if Utils.GetUID(movedObject) == 'LOOT_Gold_A' and Osi.IsContainer(toObject) == 1 then
-      JsonConfig = Config.LoadJSONConfig()
+    if VCHelpers.Format:GetTemplateName(movedObject) == 'LOOT_Gold_A' and Osi.IsContainer(toObject) == 1 then
+      Config:getCfg() = Config.LoadConfig:getCfg()()
       EHandlers.all_opened_containers = {}
       EHandlers.recently_closed = {}
       EHandlers.processed_objects = {}

@@ -6,13 +6,13 @@ Labeling.MIN_DISTANCE_PARTY_MEMBER = 8
 Labeling.HANDLE_LABEL = '_PLC_labeled'
 
 function Labeling.LabelContainersNearbyCharacter(character)
-    local shouldSimulateController = JsonConfig.FEATURES.label.simulate_controller
-    local radius = JsonConfig.FEATURES.radius
+    local shouldSimulateController = Config:getCfg().FEATURES.label.simulate_controller
+    local radius = Config:getCfg().FEATURES.radius
     if shouldSimulateController then
         radius = math.max(radius, Labeling.ACTIVE_SEARCH_RADIUS + 1)
     end
 
-    local nearbyContainers = GetNearbyCharactersAndItems(character, radius, true, true)
+    local nearbyContainers = VCHelpers.Object:GetNearbyCharactersAndItems(character, radius, true, true)
     Utils.DebugPrint(3, "Nearby items: " .. #nearbyContainers)
 
     if not shouldSimulateController then
@@ -34,9 +34,9 @@ function Labeling.LabelContainersNearbyCharacter(character)
 end
 
 function Labeling.LabelNearbyContainersForAllPartyMembers()
-    local partyMembers = Utils.GetPartyMembers()
+    local partyMembers = VCHelpers.Party:GetPartyMembers()
     local hostCharacter = Osi.GetHostCharacter()
-    local minDistance = math.max(Labeling.MIN_DISTANCE_PARTY_MEMBER, JsonConfig.FEATURES.radius)
+    local minDistance = math.max(Labeling.MIN_DISTANCE_PARTY_MEMBER, Config:getCfg().FEATURES.radius)
 
     Labeling.LabelContainersNearbyCharacter(hostCharacter)
     for _, partyMember in ipairs(partyMembers) do
@@ -47,7 +47,7 @@ function Labeling.LabelNearbyContainersForAllPartyMembers()
 end
 
 function Labeling.LabelNearbyContainers()
-    local shouldLabelAllPartyMembers = JsonConfig.FEATURES.also_check_for_party_members
+    local shouldLabelAllPartyMembers = Config:getCfg().FEATURES.also_check_for_party_members
 
     if shouldLabelAllPartyMembers then
         Labeling.LabelNearbyContainersForAllPartyMembers()
@@ -60,7 +60,8 @@ function Labeling.ProcessContainer(guid, shouldPadLabel)
     local processed = EHandlers.processed_objects[guid]
     local recentlyClosed = EHandlers.recently_closed[guid]
     local isNewOrReopened = not processed or recentlyClosed
-    local shouldSkipChecks = JsonConfig.DEBUG.always_relabel or JsonConfig.FEATURES.label.simulate_controller
+    local shouldSkipChecks = Config:getCfg().DEBUG.always_relabel or
+        Config:getCfg().FEATURES.label.simulate_controller
 
     if shouldSkipChecks or isNewOrReopened then
         Utils.DebugPrint(3, "Processing object: " .. guid)
@@ -75,13 +76,13 @@ end
 -- Function to check if the container is empty and change its name
 -- TODO: object must not be in EHandlers.all_opened_containers. If it is, call RemoveEmptyName
 function Labeling.CheckAndRenameIfLootable(object, shouldPadLabel)
-    local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or JsonConfig.FEATURES.labeling
+    local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or Config:getCfg().FEATURES.labeling
         .owned_containers
-    local shouldRemoveFromOpened = JsonConfig.FEATURES.labeling.remove_from_opened
-    local perceptionDC = JsonConfig.FEATURES.labeling.perception_check_dc
+    local shouldRemoveFromOpened = Config:getCfg().FEATURES.labeling.remove_from_opened
+    local perceptionDC = Config:getCfg().FEATURES.labeling.perception_check_dc
 
     if perceptionDC <= 1 or (Dice.RollPerception(Osi.GetHostCharacter(), perceptionDC)) then
-        if Loot.IsLootable(object) and shouldLabelOwned then
+        if VCHelpers.Lootable:IsLootable(object) and shouldLabelOwned then
             -- This will also remove numeric labels (i.e., not only Empty labels)
             if shouldRemoveFromOpened and EHandlers.all_opened_containers[object] then
                 Utils.DebugPrint(2, "Removing label for: " .. object)
@@ -103,20 +104,20 @@ local function CreateLabel(count, displayItemCount, displayCountIfEmpty, addPare
     if displayItemCount and (count > 0 or displayCountIfEmpty) then
         return "(" .. count .. ")"
     elseif count == 0 then
-        local translatedString = String.RemoveParentheses(Ext.Loca.GetTranslatedString(Labeling.EMPTY_STRING_HANDLE))
+        local translatedString = LabelString.RemoveParentheses(Ext.Loca.GetTranslatedString(Labeling.EMPTY_STRING_HANDLE))
 
         if capitalize then
-            translatedString = String.Capitalize(translatedString)
+            translatedString = VCHelpers.String:Capitalize(translatedString)
         else
-            translatedString = String.Lowercase(translatedString)
+            translatedString = VCHelpers.String:Lowercase(translatedString)
         end
 
         if addParentheses then
-            translatedString = String.AddParentheses(translatedString)
+            translatedString = LabelString.AddParentheses(translatedString)
         end
 
         return translatedString
-    elseif JsonConfig.DEBUG.level >= 3 then
+    elseif Config:getCfg().DEBUG.level >= 3 then
         return "NO_LABEL"
     else
         return ""
@@ -138,26 +139,26 @@ end
 ---@param container EntityHandle
 function SetNewLabel(container, shouldPadLabel)
     -- Utils.DebugPrint(1, "Setting container label for: " .. container)
-    local objectNameHandle = GetEntity(container).DisplayName.NameKey.Handle.Handle
+    local objectNameHandle = VCHelpers.Object:GetEntity(container).DisplayName.NameKey.Handle.Handle
     local originalName = Ext.Loca.GetTranslatedString(RemoveLabelFromHandle(objectNameHandle))
     -- local name = Osi.ResolveTranslatedString(objectNameHandle)
     -- Utils.DebugPrint(2, "Container name: " .. name)
     local itemCount = CountFilteredItems(container)
 
-    local addParentheses = JsonConfig.FEATURES.label.add_parentheses
-    local capitalize = JsonConfig.FEATURES.label.capitalize
-    local shouldAppend = JsonConfig.FEATURES.label.append
-    local shouldDisplayNumberOfItems = JsonConfig.FEATURES.label.display_number_of_items.enabled
-    local displayCountIfEmpty = JsonConfig.FEATURES.label.display_number_of_items.if_empty
+    local addParentheses = Config:getCfg().FEATURES.label.add_parentheses
+    local capitalize = Config:getCfg().FEATURES.label.capitalize
+    local shouldAppend = Config:getCfg().FEATURES.label.append
+    local shouldDisplayNumberOfItems = Config:getCfg().FEATURES.label.display_number_of_items.enabled
+    local displayCountIfEmpty = Config:getCfg().FEATURES.label.display_number_of_items.if_empty
 
     local label = CreateLabel(itemCount, shouldDisplayNumberOfItems, displayCountIfEmpty, addParentheses, capitalize)
     if shouldPadLabel and label ~= "" then -- and shouldDisplayNumberOfItems and itemCount ~= 0 then
-        label = String.PadString(label, 58, originalName)
+        label = LabelString.PadString(label, 58, originalName)
     end
 
     Utils.DebugPrint(3, "Label: " .. label)
 
-    local entity = GetEntity(container)
+    local entity = VCHelpers.Object:GetEntity(container)
     if entity ~= nil then
         if label ~= "" then
             local newDisplayName
