@@ -99,7 +99,7 @@ end
 -- Function to pad a string with spaces to match a specified width
 function LabelString.PadString(str, targetWidth, newString)
   -- Function to calculate extra padding based on the length of 'newString'
-  function calculateExtraPadding(newStringLength)
+  local function calculateExtraPadding(newStringLength)
     local maxLength = 10             -- Length at which extra padding becomes 0
     local maxExtraPaddingSpaces = 14 -- Maximum extra padding in spaces
 
