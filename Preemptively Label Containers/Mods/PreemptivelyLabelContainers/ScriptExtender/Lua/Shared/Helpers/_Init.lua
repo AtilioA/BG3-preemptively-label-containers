@@ -1,9 +1,8 @@
-RequireFiles("Server/Helpers/", {
+RequireFiles("Shared/Helpers/", {
   "Config",
   "Printer",
   "Junk",
   "LabelString",
-  "Loot",
   "Inventory",
   "Dice",
   "Labeling",

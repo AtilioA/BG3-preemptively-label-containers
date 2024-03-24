@@ -1,3 +1,5 @@
+setmetatable(Mods.PreemptivelyLabelContainers, { __index = Mods.VolitionCabinet })
+
 ---Ext.Require files at the path
 ---@param path string
 ---@param files string[]
@@ -7,7 +9,7 @@ function RequireFiles(path, files)
     end
 end
 
-RequireFiles("Server/", {
+RequireFiles("Shared/", {
     "Helpers/_Init",
     "SubscribedEvents",
     "EventHandlers",
