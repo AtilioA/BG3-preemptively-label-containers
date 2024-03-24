@@ -1,9 +1,8 @@
 SubscribedEvents = {}
 
-
 function SubscribedEvents.SubscribeToEvents()
   if Config:getCfg().GENERAL.enabled == true then
-    Utils.DebugPrint(2,
+    PLCPrint(2,
       "Subscribing to events with JSON config: " .. Ext.Json.Stringify(Config:getCfg(), { Beautify = true }))
 
     Ext.Osiris.RegisterListener("GainedControl", 1, "after", EHandlers.OnGainedControl)

@@ -10,7 +10,7 @@ function Dice.RollPerception(character, DC)
   local perception = Dice.GetCharacterPerception(character)
 
   local roll = math.random(1, 20)
-  Utils.DebugPrint(3, "Roll: " .. roll .. " Perception: " .. perception .. " DC: " .. DC)
+  PLCPrint(3, "Roll: " .. roll .. " Perception: " .. perception .. " DC: " .. DC)
   if roll == 20 then
     return true
   elseif roll == 1 then

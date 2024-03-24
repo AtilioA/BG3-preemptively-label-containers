@@ -228,6 +228,6 @@ IgnoredItems =
       }, "blocklist")
 
 
-Utils.DebugPrint(1, "Loaded " .. tostring(#IgnoredItems.items) .. " ignored items")
+PLCPrint(1, "Loaded " .. tostring(#IgnoredItems.items) .. " ignored items")
 
 return Junk
