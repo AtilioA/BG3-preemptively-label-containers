@@ -143,7 +143,7 @@ function SetNewLabel(container, shouldPadLabel)
     local originalName = Ext.Loca.GetTranslatedString(RemoveLabelFromHandle(objectNameHandle))
     -- local name = Osi.ResolveTranslatedString(objectNameHandle)
     -- PLCPrint(2, "Container name: " .. name)
-    local itemCount = CountFilteredItems(container)
+    local itemCount = Junk.CountFilteredItems(container)
 
     local addParentheses = Config:getCfg().FEATURES.label.add_parentheses
     local capitalize = Config:getCfg().FEATURES.label.capitalize
