@@ -131,21 +131,27 @@ local function CreateLabel(count, displayItemCount, displayCountIfEmpty, addPare
 end
 
 --- Add the Labeling.HANDLE_LABEL to the stringHandle
-function CreateLabeledHandle(stringHandle)
-    return stringHandle .. Labeling.HANDLE_LABEL
+function CreateLabeledHandle(entity)
+    return entity.DisplayName.NameKey.Handle.Handle .. Labeling.HANDLE_LABEL .. "_" .. entity.Uuid.EntityUuid
 end
 
---- Remove the Labeling.HANDLE_LABEL from the stringHandle
+--- Remove the Labeling.HANDLE_LABEL from the stringHandle and everything after it (uuid)
 function RemoveLabelFromHandle(stringHandle)
-    return stringHandle:gsub(Labeling.HANDLE_LABEL, "")
+    local startIndex, _ = stringHandle:find(Labeling.HANDLE_LABEL)
+    if startIndex then
+        -- Remove the label and the uuid
+        return stringHandle:sub(1, startIndex - 1)
+    else
+        return stringHandle
+    end
 end
 
 --- Return the handle if it has the Labeling.HANDLE_LABEL, otherwise return call CreateLabeledHandle
-function GetLabeledHandle(stringHandle)
-    if stringHandle:find(Labeling.HANDLE_LABEL) then
-        return stringHandle
+function GetLabeledHandle(entity)
+    if entity.DisplayName.NameKey.Handle.Handle:find(Labeling.HANDLE_LABEL) then
+        return entity.DisplayName.NameKey.Handle.Handle
     else
-        return CreateLabeledHandle(stringHandle)
+        return CreateLabeledHandle(entity)
     end
 end
 
@@ -158,7 +164,6 @@ function SetNewLabel(container, shouldPadLabel)
     -- local name = Osi.ResolveTranslatedString(objectNameHandle)
     -- PLCPrint(2, "Container name: " .. name)
     local itemCount = Junk.CountFilteredItems(container)
-
     local addParentheses = Config:getCfg().FEATURES.label.add_parentheses
     local capitalize = Config:getCfg().FEATURES.label.capitalize
     local shouldAppend = Config:getCfg().FEATURES.label.append
@@ -181,7 +186,7 @@ function SetNewLabel(container, shouldPadLabel)
             else
                 newDisplayName = label .. " " .. originalName
             end
-            local labeledHandle = GetLabeledHandle(entity.DisplayName.NameKey.Handle.Handle)
+            local labeledHandle = GetLabeledHandle(entity)
             Ext.Loca.UpdateTranslatedString(labeledHandle, newDisplayName)
             entity.DisplayName.NameKey.Handle.Handle = labeledHandle
             entity:Replicate("DisplayName")
