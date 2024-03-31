@@ -229,7 +229,7 @@ Junk.IgnoredItems =
       }, "blocklist")
 
 
-PLCPrint(1, "Loaded " .. tostring(#Junk.IgnoredItems.items) .. " ignored items")
+PLCPrint(1, "Loaded " .. tostring(Junk.IgnoredItems:GetItemCount()) .. " ignored items")
 
 function Junk.CountFilteredItems(object)
   local items = VCHelpers.Inventory:GetInventory(object)
