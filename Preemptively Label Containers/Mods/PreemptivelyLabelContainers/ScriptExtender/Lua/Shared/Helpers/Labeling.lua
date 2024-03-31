@@ -82,11 +82,13 @@ end
 function Labeling.CheckAndRenameIfLootable(object, shouldPadLabel)
     local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or Config:getCfg().FEATURES.labeling
         .owned_containers
+    local shouldLabelNested = Config:getCfg().FEATURES.labeling.nested_containers or VCHelpers.Object:IsObjectInWorld(
+        object)
     local shouldRemoveFromOpened = Config:getCfg().FEATURES.labeling.remove_from_opened
     local perceptionDC = Config:getCfg().FEATURES.labeling.perception_check_dc
 
     if perceptionDC <= 1 or (Dice.RollPerception(Osi.GetHostCharacter(), perceptionDC)) then
-        if VCHelpers.Lootable:IsLootable(object) and shouldLabelOwned then
+        if VCHelpers.Lootable:IsLootable(object) and shouldLabelOwned and shouldLabelNested then
             -- This will also remove numeric labels (i.e., not only Empty labels)
             if shouldRemoveFromOpened and EHandlers.all_opened_containers[object] then
                 PLCPrint(2, "Removing label for: " .. object)

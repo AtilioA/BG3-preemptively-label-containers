@@ -26,7 +26,9 @@ end
 
 function EHandlers.OnUseStarted(character, item)
   if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and VCHelpers.Lootable:IsLootable(item) then
-    -- Utils.DumpCharacterEntity(item)
+    -- if Config:getCfg().DEBUG.level > 2 then
+    --   VCHelpers.Object:DumpObjectEntity(item, "PLC")
+    -- end
     PLCPrint(2, "UseStarted: " .. character .. " " .. item)
     EHandlers.all_opened_containers[item] = true
     -- EHandlers.processed_objects[item] = nil
