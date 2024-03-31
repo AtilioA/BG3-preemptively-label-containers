@@ -6,6 +6,11 @@ Labeling.MIN_DISTANCE_PARTY_MEMBER = 8
 Labeling.HANDLE_LABEL = '_PLC_labeled'
 
 function Labeling.LabelContainersNearbyCharacter(character)
+    if VCHelpers.Character:IsCharacterInCamp(character) then
+        PLCDebug(3, "Character is in camp, skipping labeling")
+        return
+    end
+
     local shouldSimulateController = Config:getCfg().FEATURES.label.simulate_controller
     local radius = Config:getCfg().FEATURES.radius
     if shouldSimulateController then
