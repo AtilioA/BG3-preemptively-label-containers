@@ -12,8 +12,9 @@ Config = VCHelpers.Config:New({
         labeling = {
             always_relabel = true,           -- Skip checks to update containers labels: always regenerate labels even if they are already labeled
             owned_containers = true,         -- Label containers owned by others (the ones that show a red highlight)
-            -- remove_from_opened = false, -- Remove the label from containers that are opened by the player (good for controller users) (UNUSED)
+            -- remove_from_opened = true, -- Remove the label from containers that are opened by the player (good for controller users)
             perception_check_dc = 0,         -- Perception check DC to label a container (0 = always succeed)
+            nested_containers = false,       -- Label containers inside containers
         },
         label = {
             capitalize = true,           -- Capitalize the label
@@ -38,7 +39,7 @@ Config = VCHelpers.Config:New({
 Config:UpdateCurrentConfig()
 
 Config:AddConfigReloadedCallback(function(configInstance)
-  ASRBTCPrinter.DebugLevel = configInstance:GetCurrentDebugLevel()
-  ASRBTCPrint(0, "Config reloaded: " .. Ext.Json.Stringify(configInstance:getCfg(), { Beautify = true }))
+  PLCPrinter.DebugLevel = configInstance:GetCurrentDebugLevel()
+  PLCPrint(0, "Config reloaded: " .. Ext.Json.Stringify(configInstance:getCfg(), { Beautify = true }))
 end)
 Config:RegisterReloadConfigCommand("plc")
