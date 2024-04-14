@@ -87,7 +87,7 @@ function Labeling.CheckAndRenameIfLootable(object, shouldPadLabel)
     local shouldRemoveFromOpened = Config:getCfg().FEATURES.labeling.remove_from_opened
     local perceptionDC = Config:getCfg().FEATURES.labeling.perception_check_dc
 
-    if perceptionDC <= 1 or (Dice.RollPerception(Osi.GetHostCharacter(), perceptionDC)) then
+    if perceptionDC <= 0 or (Dice.RollPerception(Osi.GetHostCharacter(), perceptionDC)) then
         if VCHelpers.Lootable:IsLootable(object) and shouldLabelOwned and shouldLabelNested then
             -- This will also remove numeric labels (i.e., not only Empty labels)
             if shouldRemoveFromOpened and EHandlers.all_opened_containers[object] then
@@ -137,10 +137,10 @@ end
 
 --- Remove the Labeling.HANDLE_LABEL from the stringHandle and everything after it (uuid)
 function RemoveLabelFromHandle(stringHandle)
-    local startIndex, _ = stringHandle:find(Labeling.HANDLE_LABEL)
-    if startIndex then
+    local labelIndex, _ = stringHandle:find(Labeling.HANDLE_LABEL)
+    if labelIndex then
         -- Remove the label and the uuid
-        return stringHandle:sub(1, startIndex - 1)
+        return stringHandle:sub(1, labelIndex - 1)
     else
         return stringHandle
     end
@@ -196,14 +196,14 @@ function SetNewLabel(container, shouldPadLabel)
     end
 end
 
--- TODO: clear the extra label of a container that is opened. I don't know if we can just set it to "", but a regex replace would work.
--- After player opens a container, remove the empty label. However: "I diffed a dump of an unopened and opened version of the same item and there weren't any differences 😦"
+--- After player opens a container, remove the label.
 ---@param entity EntityHandle
 function RemoveLabel(entityHandle)
     local entity = Ext.Entity.Get(entityHandle)
-    -- PLCPrint(2, "Removing label for: " .. entity)
-    entity.DisplayName.NameKey.Handle.Handle = RemoveLabelFromHandle(entity.DisplayName.NameKey.Handle.Handle)
-    entity:Replicate("DisplayName")
+    if entity then
+        entity.DisplayName.NameKey.Handle.Handle = RemoveLabelFromHandle(entity.DisplayName.NameKey.Handle.Handle)
+        entity:Replicate("DisplayName")
+    end
 end
 
 return Labeling
