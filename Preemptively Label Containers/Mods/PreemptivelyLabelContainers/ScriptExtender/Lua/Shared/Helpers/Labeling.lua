@@ -11,8 +11,8 @@ function Labeling.LabelContainersNearbyCharacter(character)
         return
     end
 
-    local shouldSimulateController = Config:getCfg().FEATURES.label.simulate_controller
-    local radius = Config:getCfg().FEATURES.radius
+    local shouldSimulateController = MCMGet("simulate_controller")
+    local radius = MCMGet("radius")
     if shouldSimulateController then
         radius = math.max(radius, Labeling.ACTIVE_SEARCH_RADIUS + 1)
     end
@@ -41,7 +41,7 @@ end
 function Labeling.LabelNearbyContainersForAllPartyMembers()
     local partyMembers = VCHelpers.Party:GetPartyMembers()
     local hostCharacter = Osi.GetHostCharacter()
-    local minDistance = math.max(Labeling.MIN_DISTANCE_PARTY_MEMBER, Config:getCfg().FEATURES.radius)
+    local minDistance = math.max(Labeling.MIN_DISTANCE_PARTY_MEMBER, MCMGet("radius"))
 
     Labeling.LabelContainersNearbyCharacter(hostCharacter)
     for _, partyMember in ipairs(partyMembers) do
@@ -52,7 +52,7 @@ function Labeling.LabelNearbyContainersForAllPartyMembers()
 end
 
 function Labeling.LabelNearbyContainers()
-    local shouldLabelAllPartyMembers = Config:getCfg().FEATURES.also_check_for_party_members
+    local shouldLabelAllPartyMembers = MCMGet("also_check_for_party_members")
 
     if shouldLabelAllPartyMembers then
         Labeling.LabelNearbyContainersForAllPartyMembers()
@@ -65,8 +65,8 @@ function Labeling.ProcessContainer(guid, shouldPadLabel)
     local processed = EHandlers.processed_objects[guid]
     local recentlyClosed = EHandlers.recently_closed[guid]
     local isNewOrReopened = not processed or recentlyClosed
-    local shouldSkipChecks = Config:getCfg().DEBUG.always_relabel or
-        Config:getCfg().FEATURES.label.simulate_controller
+    local shouldSkipChecks = MCMGet("always_relabel") or
+        MCMGet("simulate_controller")
 
     if shouldSkipChecks or isNewOrReopened then
         PLCPrint(3, "Processing object: " .. guid)
@@ -80,12 +80,11 @@ end
 
 -- Function to check if the container is empty and change its name
 function Labeling.CheckAndRenameIfLootable(object, shouldPadLabel)
-    local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or Config:getCfg().FEATURES.labeling
-        .owned_containers
-    local shouldLabelNested = Config:getCfg().FEATURES.labeling.nested_containers or VCHelpers.Object:IsObjectInWorld(
+    local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or MCMGet("owned_containers")
+    local shouldLabelNested = MCMGet("nested_containers") or VCHelpers.Object:IsObjectInWorld(
         object)
-    local shouldRemoveFromOpened = Config:getCfg().FEATURES.labeling.remove_from_opened
-    local perceptionDC = Config:getCfg().FEATURES.labeling.perception_check_dc
+    local shouldRemoveFromOpened = MCMGet("remove_from_opened")
+    local perceptionDC = MCMGet("perception_check_dc")
 
     if perceptionDC <= 0 or (Dice.RollPerception(Osi.GetHostCharacter(), perceptionDC)) then
         if VCHelpers.Lootable:IsLootable(object) and shouldLabelOwned and shouldLabelNested then
@@ -123,7 +122,7 @@ local function CreateLabel(count, displayItemCount, displayCountIfEmpty, addPare
         end
 
         return translatedString
-    elseif Config:getCfg().DEBUG.level >= 3 then
+    elseif MCMGet("debug_level") >= 3 then
         return "NO_LABEL"
     else
         return ""
@@ -164,11 +163,11 @@ function SetNewLabel(container, shouldPadLabel)
     -- local name = Osi.ResolveTranslatedString(objectNameHandle)
     -- PLCPrint(2, "Container name: " .. name)
     local itemCount = Junk.CountFilteredItems(container)
-    local addParentheses = Config:getCfg().FEATURES.label.add_parentheses
-    local capitalize = Config:getCfg().FEATURES.label.capitalize
-    local shouldAppend = Config:getCfg().FEATURES.label.append
-    local shouldDisplayNumberOfItems = Config:getCfg().FEATURES.label.display_number_of_items.enabled
-    local displayCountIfEmpty = Config:getCfg().FEATURES.label.display_number_of_items.if_empty
+    local addParentheses = MCMGet("add_parentheses")
+    local capitalize = MCMGet("capitalize")
+    local shouldAppend = MCMGet("append")
+    local shouldDisplayNumberOfItems = MCMGet("display_number_of_items")
+    local displayCountIfEmpty = MCMGet("if_empty")
 
     local label = CreateLabel(itemCount, shouldDisplayNumberOfItems, displayCountIfEmpty, addParentheses, capitalize)
     if shouldPadLabel and label ~= "" then -- and shouldDisplayNumberOfItems and itemCount ~= 0 then

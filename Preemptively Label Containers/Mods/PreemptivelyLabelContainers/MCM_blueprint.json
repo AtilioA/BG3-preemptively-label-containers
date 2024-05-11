@@ -1,0 +1,249 @@
+{
+    "SchemaVersion": 1,
+    "Tabs": [
+        {
+            "TabName": "General",
+            "TabId": "general",
+            "Sections": [
+                {
+                    "SectionId": "general_settings",
+                    "SectionName": "General settings",
+                    "Settings": [
+                        {
+                            "Id": "mod_enabled",
+                            "Name": "Enable mod",
+                            "Type": "checkbox",
+                            "Default": true,
+                            "Description": "Toggle the mod on/off without uninstalling it.",
+                            "Handles": {
+                                "DescriptionHandle": "hb8f7418427984bf390bb58773b16adb0c742",
+                                "NameHandle": "hd29b757f58a441e59126901a729001449780"
+                            },
+                            "Tooltip": "Toggle the mod on/off"
+                        }
+                    ]
+                },
+                {
+                    "SectionId": "debugging_settings",
+                    "SectionName": "Debugging",
+                    "Settings": [
+                        {
+                            "Id": "debug_level",
+                            "Name": "Debug level",
+                            "Type": "slider_int",
+                            "Default": 0,
+                            "Description": "0 = no debug, 1 = minimal, 2 = verbose debug logs.",
+                            "Handles": {
+                                "DescriptionHandle": "h0eea6060d72a4d0fb47028db2efb007d3edb",
+                                "NameHandle": "h8667879dcfbb46ff8ab0e49e44f8919bfgda"
+                            },
+                            "Options": {
+                                "Min": 0,
+                                "Max": 2
+                            }
+                        },
+                        {
+                            "Id": "always_relabel",
+                            "Name": "Always relabel",
+                            "Type": "checkbox",
+                            "Default": true,
+                            "Description": "Skip checks to update containers labels;\nalways regenerate labels even if they are already labeled.",
+                            "Handles": {
+                                "DescriptionHandle": "h1a7ee4059aea4424add5e0bc4bbda02365ac",
+                                "NameHandle": "h8d2b4ddf6abf40849dd2990e641260398f82"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "TabName": "Features",
+            "TabId": "features",
+            "Sections": [
+                {
+                    "SectionId": "labeling_settings",
+                    "SectionName": "Labeling settings",
+                    "Settings": [
+                        {
+                            "Id": "radius",
+                            "Name": "Search radius (m)",
+                            "Type": "slider_int",
+                            "Default": 12,
+                            "Options": {
+                                "Min": 5,
+                                "Max": 30
+                            },
+                            "Description": "How far away in meters to look for containers to label (12m = ~40ft).",
+                            "Handles": {
+                                "DescriptionHandle": "h4c55ea8266b04940ac68ebb0ea17a7132996",
+                                "NameHandle": "h1b191afa6b6640ffb6f6d0e92fb701317589"
+                            }
+                        },
+                        {
+                            "Id": "refresh_interval_ms",
+                            "Name": "Labeling refresh interval (ms)",
+                            "Type": "slider_int",
+                            "Default": 500,
+                            "Options": {
+                                "Min": 100,
+                                "Max": 5000
+                            },
+                            "Description": "Labeling refresh interval in milliseconds (500ms = 0.5s).",
+                            "Handles": {
+                                "DescriptionHandle": "h2d3f9fb865d540c4a069165cc1c396859de9",
+                                "NameHandle": "h6898ac6b1e194eb79e585c191628a2f6d148"
+                            }
+                        },
+                        {
+                            "Id": "owned_containers",
+                            "Name": "Label owned containers",
+                            "Type": "checkbox",
+                            "Default": true,
+                            "Description": "Label containers owned by others (the ones that show a red highlight).",
+                            "Handles": {
+                                "DescriptionHandle": "h14c7122717ba4078a2cc5708da3774c1c4e9",
+                                "NameHandle": "h9c7d06ac14b7452cbcb279c6a53558f90963"
+                            }
+                        },
+                        {
+                            "Id": "nested_containers",
+                            "Name": "Label nested containers",
+                            "Type": "checkbox",
+                            "Default": false,
+                            "Description": "Label containers inside containers.",
+                            "Handles": {
+                                "DescriptionHandle": "hf3cb214b816948fb8b2ac4f99030b65b6c31",
+                                "NameHandle": "h7bbc16d9aa364491bc6a0fe919529f476ab6"
+                            }
+                        },
+                        {
+                            "Id": "perception_check_dc",
+                            "Name": "Perception check DC",
+                            "Type": "slider_int",
+                            "Default": 0,
+                            "Description": "Fake perception check DC to label a container (0 = always succeed).",
+                            "Handles": {
+                                "DescriptionHandle": "ha5d66af65c2e4bc796a6774f626272049788",
+                                "NameHandle": "h35b60d4f556445869d9d4c6a836cb9d57083"
+                            },
+                            "Options": {
+                                "Min": 0,
+                                "Max": 99
+                            }
+                        },
+                        {
+                            "Id": "also_check_for_party_members",
+                            "Name": "Label containers for all party members",
+                            "Type": "checkbox",
+                            "Default": true,
+                            "Description": "Label containers for all party members\n(unchecked = only label for the host/active character).",
+                            "Handles": {
+                                "DescriptionHandle": "h3a7d2f9c51334f038d0a3b345a70b55449b4",
+                                "NameHandle": "hd0f4763d1a5f4e939e209e5b3c35e74eb702"
+                            }
+                        }
+                    ],
+                    "Handles": {
+                        "NameHandle": "hedb35a1a917146fc997c41bcf7cf94c337db"
+                    }
+                },
+                {
+                    "SectionId": "label_format_settings",
+                    "SectionName": "Label format settings",
+                    "Settings": [
+                        {
+                            "Id": "capitalize",
+                            "Name": "Capitalize label",
+                            "Type": "checkbox",
+                            "Default": true,
+                            "Description": "Whether the label should be capitalized.",
+                            "Handles": {
+                                "DescriptionHandle": "h7ded515f62b944c2854a93f5990e8dbe5f9c",
+                                "NameHandle": "h181a3fe2b58c4ef6a719c42add1101aaa5a9"
+                            }
+                        },
+                        {
+                            "Id": "add_parentheses",
+                            "Name": "Add parentheses",
+                            "Type": "checkbox",
+                            "Default": true,
+                            "Description": "Whether the label should be enclosed in parentheses.",
+                            "Handles": {
+                                "DescriptionHandle": "h301b3a09e1ec4517b71b331cc94d18197913",
+                                "NameHandle": "h9370c6c168fb4a0994f08b18cd69dad290db"
+                            }
+                        },
+                        {
+                            "Id": "append",
+                            "Name": "Append label",
+                            "Type": "checkbox",
+                            "Default": true,
+                            "Description": "Adds the label after the container's name.\n(unchecked = adds before the label).",
+                            "Handles": {
+                                "DescriptionHandle": "ha11def49010f48749f084a77c4009d61ga8a",
+                                "NameHandle": "h22df566d686848a28e5104a47a3b8fe919a3"
+                            }
+                        },
+                        {
+                            "Id": "simulate_controller",
+                            "Name": "Simulate controller padding",
+                            "Type": "checkbox",
+                            "Default": false,
+                            "Description": "Simulate the spacing used in empty labels by the gamepad UI.",
+                            "Handles": {
+                                "DescriptionHandle": "h848b235a75334030af14a12b5ed77d4fc161",
+                                "NameHandle": "hde2da1edd3d24614b5c2de43bda4dbb1ae41"
+                            }
+                        },
+                        {
+                            "Id": "display_number_of_items",
+                            "Name": "Display number of items",
+                            "Type": "checkbox",
+                            "Default": false,
+                            "Description": "Display the number of items in the container.",
+                            "Handles": {
+                                "DescriptionHandle": "h9f0e982cf4e74611839b3df76e43cb207a2a",
+                                "NameHandle": "h04f84c2ea34845b49a85711fa85aed230c38"
+                            }
+                        },
+                        {
+                            "Id": "if_empty",
+                            "Name": "Display number if empty",
+                            "Type": "checkbox",
+                            "Default": true,
+                            "Description": "Show the number of items even if the container is empty.",
+                            "Handles": {
+                                "DescriptionHandle": "h1fd36e0083fe45a08879f8dfbc4c849d460d",
+                                "NameHandle": "h9ac5000732c74d0590fff2a63023a61c1beb"
+                            }
+                        }
+                    ],
+                    "Handles": {
+                        "NameHandle": "h80c06c7262f54fbaae513fe2de35c2e792gb"
+                    }
+                },
+                {
+                    "SectionId": "filters_settings",
+                    "SectionName": "Filters settings",
+                    "Settings": [
+                        {
+                            "Id": "ignored_items",
+                            "Name": "Ignore items",
+                            "Type": "checkbox",
+                            "Default": true,
+                            "Description": "Ignore items in the 'ignored_items.json' file for counting purposes.",
+                            "Handles": {
+                                "DescriptionHandle": "hb484603b6e7d4c1a888b4b6ffba24c4a5987",
+                                "NameHandle": "hcf273c2445e64997a7cd82fc01b4f8e6a4cd"
+                            }
+                        }
+                    ],
+                    "Handles": {
+                        "NameHandle": "h6b85f65aba0b412ca95c7d057716283bef1b"
+                    }
+                }
+            ]
+        }
+    ]
+}

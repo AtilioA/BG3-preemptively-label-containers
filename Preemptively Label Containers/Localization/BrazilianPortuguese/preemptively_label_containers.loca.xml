@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<contentList>
+    <content contentuid="hedb35a1a917146fc997c41bcf7cf94c337db" version="1">Configurações de rotulagem</content>
+    <content contentuid="h80c06c7262f54fbaae513fe2de35c2e792gb" version="1">Configurações de formatação de rótulo</content>
+    <content contentuid="h6b85f65aba0b412ca95c7d057716283bef1b" version="1">Configurações de filtros</content>
+    <content contentuid="hd29b757f58a441e59126901a729001449780" version="1">Habilitar mod</content>
+    <content contentuid="h8667879dcfbb46ff8ab0e49e44f8919bfgda" version="1">Nível de depuração</content>
+    <content contentuid="h8d2b4ddf6abf40849dd2990e641260398f82" version="1">Sempre rerotular</content>
+    <content contentuid="h1b191afa6b6640ffb6f6d0e92fb701317589" version="1">Raio de busca (m)</content>
+    <content contentuid="h6898ac6b1e194eb79e585c191628a2f6d148" version="1">Intervalo de atualização de rotulagem (ms)</content>
+    <content contentuid="h9c7d06ac14b7452cbcb279c6a53558f90963" version="1">Rotular containers próprios</content>
+    <content contentuid="h7bbc16d9aa364491bc6a0fe919529f476ab6" version="1">Rotular containers aninhados</content>
+    <content contentuid="h35b60d4f556445869d9d4c6a836cb9d57083" version="1">Dificuldade de teste de Percepção</content>
+    <content contentuid="hd0f4763d1a5f4e939e209e5b3c35e74eb702" version="1">Rotular containers para todos os membros do grupo</content>
+    <content contentuid="h181a3fe2b58c4ef6a719c42add1101aaa5a9" version="1">Capitalizar rótulo</content>
+    <content contentuid="h9370c6c168fb4a0994f08b18cd69dad290db" version="1">Adicionar parênteses em volta do rótulo</content>
+    <content contentuid="h22df566d686848a28e5104a47a3b8fe919a3" version="1">Sufixar rótulo</content>
+    <content contentuid="hde2da1edd3d24614b5c2de43bda4dbb1ae41" version="1">Simular espaçamento da interface de controle</content>
+    <content contentuid="h04f84c2ea34845b49a85711fa85aed230c38" version="1">Exibir número de itens no rótulo</content>
+    <content contentuid="h9ac5000732c74d0590fff2a63023a61c1beb" version="1">Exibir número mesmo se vazio</content>
+    <content contentuid="hcf273c2445e64997a7cd82fc01b4f8e6a4cd" version="1">Ignorar itens</content>
+    <content contentuid="hb8f7418427984bf390bb58773b16adb0c742" version="1">Ativa/desativa o mod sem desinstalá-lo.</content>
+    <content contentuid="h0eea6060d72a4d0fb47028db2efb007d3edb" version="1">0 = sem depuração, 1 = mínimo, 2 = logs de depuração detalhados.</content>
+    <content contentuid="h1a7ee4059aea4424add5e0bc4bbda02365ac" version="1">Ignorar verificações para atualizar rótulos de containers:&lt;br&gt;sempre regera rótulos, mesmo se já tiverem sido criados.</content>
+    <content contentuid="h4c55ea8266b04940ac68ebb0ea17a7132996" version="1">Quão longe em metros procurar por containers para rotular.</content>
+    <content contentuid="h2d3f9fb865d540c4a069165cc1c396859de9" version="1">Intervalo de atualização de rotulagem em milissegundos (500ms = 0.5s).</content>
+    <content contentuid="h14c7122717ba4078a2cc5708da3774c1c4e9" version="1">Rotular containers com dono (possuem um contorno vermelho).</content>
+    <content contentuid="hf3cb214b816948fb8b2ac4f99030b65b6c31" version="1">Rotular containers dentro de containers.</content>
+    <content contentuid="ha5d66af65c2e4bc796a6774f626272049788" version="1">Teste fictício para determinar se um container deve ser rotulado (0 = irá rotular todos).</content>
+    <content contentuid="h3a7d2f9c51334f038d0a3b345a70b55449b4" version="1">Rotular containers para todos os membros do grupo&lt;br&gt;(desmarcado = rotular apenas para o host/personagem ativo).</content>
+    <content contentuid="h7ded515f62b944c2854a93f5990e8dbe5f9c" version="1">Capitalizar o rótulo.</content>
+    <content contentuid="h301b3a09e1ec4517b71b331cc94d18197913" version="1">Certificar-se de que o rótulo esteja entre parênteses.</content>
+    <content contentuid="ha11def49010f48749f084a77c4009d61ga8a" version="1">Adiciona o rótulo após o nome do container&lt;br&gt;(desmarcado = adiciona antes do rótulo).</content>
+    <content contentuid="h848b235a75334030af14a12b5ed77d4fc161" version="1">Simular o espaçamento usado em rótulos vazios ao usar um controle.</content>
+    <content contentuid="h9f0e982cf4e74611839b3df76e43cb207a2a" version="1">Exibir o número de itens no container.</content>
+    <content contentuid="h1fd36e0083fe45a08879f8dfbc4c849d460d" version="1">Mostrar o número de itens mesmo se o container estiver vazio.</content>
+    <content contentuid="hb484603b6e7d4c1a888b4b6ffba24c4a5987" version="1">Ignorar itens no arquivo 'ignored_items.json' ao fazer contagem de itens.</content>
+.</contentList>
