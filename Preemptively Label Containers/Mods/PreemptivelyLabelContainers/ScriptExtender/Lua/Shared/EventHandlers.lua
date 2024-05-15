@@ -5,12 +5,18 @@ EHandlers.recently_closed = {}
 -- We're interested in containers/corpses, but we check for objects to avoid doing checks early
 EHandlers.processed_objects = {}
 
--- Initializes a timer on gaining control
-function EHandlers.OnGainedControl(character)
-    -- Utils.DumpCharacterEntity(character)
-    -- PLCPrint(2, Osi.CalculatePassiveSkill(character, "Perception"))
+function EHandlers.StartLabelingTimer()
     Labeling.LabelNearbyContainers()
     Osi.TimerLaunch("RenameContainers", MCMGet("refresh_interval_ms"))
+end
+
+-- Initializes a timer on gaining control
+function EHandlers.OnGainedControl(character)
+    EHandlers.StartLabelingTimer()
+end
+
+function EHandlers.OnLevelGameplayStarted()
+    EHandlers.StartLabelingTimer()
 end
 
 function EHandlers.OnTimerFinished(timerName)
@@ -19,9 +25,7 @@ function EHandlers.OnTimerFinished(timerName)
     end
 
     PLCPrint(2, "Timer finished: " .. timerName)
-    Labeling.LabelNearbyContainers()
-
-    Osi.TimerLaunch("RenameContainers", MCMGet("refresh_interval_ms"))
+    EHandlers.StartLabelingTimer()
 end
 
 function EHandlers.OnUseStarted(character, item)
