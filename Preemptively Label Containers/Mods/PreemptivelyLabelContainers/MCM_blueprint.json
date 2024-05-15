@@ -133,6 +133,17 @@
                             }
                         },
                         {
+                            "Id": "remove_from_opened",
+                            "Name": "Remove label from opened containers",
+                            "Type": "checkbox",
+                            "Default": true,
+                            "Description": "Try to remove the label from containers that have been opened in the current session.",
+                            "Handles": {
+                                "NameHandle": "h5e484357348f414bb97272a4a2c59921ba97",
+                                "DescriptionHandle": "hc99f15bcfca74605b00e1e322a0ed94e262b"
+                            }
+                        },
+                        {
                             "Id": "also_check_for_party_members",
                             "Name": "Label containers for all party members",
                             "Type": "checkbox",

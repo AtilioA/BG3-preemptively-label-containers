@@ -34,5 +34,8 @@
     <content contentuid="h848b235a75334030af14a12b5ed77d4fc161" version="1">Simular o espaçamento usado em rótulos vazios ao usar um controle.</content>
     <content contentuid="h9f0e982cf4e74611839b3df76e43cb207a2a" version="1">Exibir o número de itens no container.</content>
     <content contentuid="h1fd36e0083fe45a08879f8dfbc4c849d460d" version="1">Mostrar o número de itens mesmo se o container estiver vazio.</content>
-    <content contentuid="hb484603b6e7d4c1a888b4b6ffba24c4a5987" version="1">Ignorar itens no arquivo 'ignored_items.json' ao fazer contagem de itens.</content>
-.</contentList>
+    <content contentuid="hb484603b6e7d4c1a888b4b6ffba24c4a5987" version="1">Ignorar itens no arquivo 'ignored_items.json' ao fazer contagem de itens.
+    </content>
+    <content contentuid="h5e484357348f414bb97272a4a2c59921ba97" version="1">Remover rótulo de containers abertos</content>
+    <content contentuid="hc99f15bcfca74605b00e1e322a0ed94e262b" version="1">Tentar remover o rótulo de containers que foram abertos na sessão atual.</content>
+</contentList>
