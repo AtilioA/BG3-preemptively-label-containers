@@ -16,7 +16,7 @@ function SubscribedEvents.SubscribeToEvents()
         Ext.Json.Stringify(Mods.BG3MCM.MCMAPI:GetAllModSettings(ModuleUUID), { Beautify = true }))
 
     Ext.Osiris.RegisterListener("GainedControl", 1, "after", conditionalWrapper(EHandlers.OnGainedControl))
-    Ext.Osiris.RegisterListener("LevelGameplayStarted", 1, "after", conditionalWrapper(EHandlers.OnLevelGameplayStarted))
+    Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", conditionalWrapper(EHandlers.OnLevelGameplayStarted))
 
     Ext.Osiris.RegisterListener("TimerFinished", 1, "after", conditionalWrapper(EHandlers.OnTimerFinished))
 
