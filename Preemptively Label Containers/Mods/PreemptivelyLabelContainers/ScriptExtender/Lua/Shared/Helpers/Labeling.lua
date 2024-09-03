@@ -45,6 +45,10 @@ function Labeling.LabelNearbyContainersForAllPartyMembers()
 
     Labeling.LabelContainersNearbyCharacter(hostCharacter)
     for _, partyMember in ipairs(partyMembers) do
+        local distance = Osi.GetDistanceTo(partyMember, hostCharacter)
+        if not distance then
+            distance = 0
+        end
         if Osi.GetDistanceTo(partyMember, hostCharacter) >= minDistance then
             Labeling.LabelContainersNearbyCharacter(partyMember)
         end
