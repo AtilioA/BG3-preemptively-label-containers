@@ -29,9 +29,8 @@ function SubscribedEvents.SubscribeToEvents()
     Ext.Osiris.RegisterListener("Died", 1, "before", conditionalWrapper(EHandlers.OnCharacterDied))
 
     -- Update labels if any settings are changed
-    Ext.RegisterNetListener("MCM_Saved_Setting", function(call, payload)
-        local data = Ext.Json.Parse(payload)
-        if not data or data.modGUID ~= ModuleUUID or not data.settingId then
+    Ext.ModEvents.BG3MCM["MCM_Setting_Saved"]:Subscribe(function(payload)
+        if not payload or payload.modUUID ~= ModuleUUID or not payload.settingId then
             return
         end
 
