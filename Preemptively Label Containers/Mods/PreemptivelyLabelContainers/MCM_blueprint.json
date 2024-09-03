@@ -99,7 +99,7 @@
                             "Id": "owned_containers",
                             "Name": "Label owned containers",
                             "Type": "checkbox",
-                            "Default": true,
+                            "Default": false,
                             "Description": "Label containers owned by others (the ones that show a red highlight).",
                             "Handles": {
                                 "DescriptionHandle": "h14c7122717ba4078a2cc5708da3774c1c4e9",

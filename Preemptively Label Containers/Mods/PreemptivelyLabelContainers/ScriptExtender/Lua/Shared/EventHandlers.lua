@@ -30,7 +30,7 @@ end
 
 function EHandlers.OnUseStarted(character, item)
     if Osi.IsInPartyWith(character, Osi.GetHostCharacter()) == 1 and VCHelpers.Lootable:IsLootable(item) then
-        -- if MCMGet("debug_level") > 2 then
+        -- if MCMGet("debug_level") >= 2 then
         --   VCHelpers.Object:DumpObjectEntity(item, "PLC")
         -- end
         PLCPrint(2, "UseStarted: " .. character .. " " .. item)

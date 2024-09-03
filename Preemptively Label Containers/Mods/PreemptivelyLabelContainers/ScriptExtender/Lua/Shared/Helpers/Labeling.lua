@@ -82,11 +82,29 @@ function Labeling.ProcessContainer(guid, shouldPadLabel)
     end
 end
 
+-- Function to check if the object is owned
+local function isOwnedObject(object)
+    if not object then
+        return false
+    end
+
+    -- Unreliable, as usual with Osiris
+    -- local hasCrimeOwner = Osi.QRY_CrimeItemHasNPCOwner(object) ~= 0
+
+    local entity = Ext.Entity.Get(object)
+    if not entity or not entity.OwneeCurrent then
+        return false
+    end
+
+    local isOwned = entity and entity.OwneeCurrent and entity.OwneeCurrent.Ownee ~= nil
+
+    return isOwned
+end
+
 -- Function to check if the container is empty and change its name
 function Labeling.CheckAndRenameIfLootable(object, shouldPadLabel)
-    local shouldLabelOwned = (Osi.QRY_CrimeItemHasNPCOwner(object) == 0) or MCMGet("owned_containers")
-    local shouldLabelNested = MCMGet("nested_containers") or VCHelpers.Object:IsObjectInWorld(
-        object)
+    local shouldLabelOwned = MCMGet("owned_containers") or not isOwnedObject(object)
+    local shouldLabelNested = MCMGet("nested_containers") or VCHelpers.Object:IsObjectInWorld(object)
     local shouldRemoveFromOpened = MCMGet("remove_from_opened")
     local perceptionDC = MCMGet("perception_check_dc")
 
@@ -193,7 +211,7 @@ function SetNewLabel(container, shouldPadLabel)
             Ext.Loca.UpdateTranslatedString(labeledHandle, newDisplayName)
             -- Send to clients so that they can also update the label (won't work on multiplayer otherwise)
             Ext.Net.BroadcastMessage("PLC_UpdateLabel",
-            Ext.Json.Stringify({ handle = labeledHandle, newLabel = newDisplayName }))
+                Ext.Json.Stringify({ handle = labeledHandle, newLabel = newDisplayName }))
             entity.DisplayName.NameKey.Handle.Handle = labeledHandle
             entity:Replicate("DisplayName")
         end
