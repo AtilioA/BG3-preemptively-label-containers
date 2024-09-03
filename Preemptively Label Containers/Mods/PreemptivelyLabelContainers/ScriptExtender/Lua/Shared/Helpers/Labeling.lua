@@ -187,6 +187,9 @@ function SetNewLabel(container, shouldPadLabel)
             end
             local labeledHandle = GetLabeledHandle(entity)
             Ext.Loca.UpdateTranslatedString(labeledHandle, newDisplayName)
+            -- Send to clients so that they can also update the label (won't work on multiplayer otherwise)
+            Ext.Net.BroadcastMessage("PLC_UpdateLabel",
+            Ext.Json.Stringify({ handle = labeledHandle, newLabel = newDisplayName }))
             entity.DisplayName.NameKey.Handle.Handle = labeledHandle
             entity:Replicate("DisplayName")
         end
