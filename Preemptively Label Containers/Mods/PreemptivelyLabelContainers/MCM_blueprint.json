@@ -240,10 +240,912 @@
                     "Settings": [
                         {
                             "Id": "ignored_items",
-                            "Name": "Ignore items",
-                            "Type": "checkbox",
-                            "Default": true,
-                            "Description": "Ignore items in the 'ignored_items.json' file for counting purposes.",
+                            "Name": "Ignored items",
+                            "Type": "list_v2",
+                            "Description": "List of items to ignore for counting purposes.",
+                            "Default": {
+                                "enabled": true,
+                                "elements": [
+                                    {
+                                        "name": "ARM_Gloves_Hide",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "ARR_Arrow_Normal",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "BASE_CONS_Drink_Potion",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "BASE_LOOT_Arrow",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "BASE_LOOT_Belt",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "BASE_LOOT_Dye",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "BASE_LOOT_Gem",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "BASE_LOOT_Music",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "BASE_LOOT_Necklace",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "BGO_Cabbage_Spoiled",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_ARR_Arrow_Normal",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_CONS_GEN_Drink_Mug_Metal_A_Empty",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_DEC_Dungeon_Skeleton_Skull_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_DEC_FARM_Bucket_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_DEC_GEN_Ink_Pot_Quill_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_DEC_GEN_KitchenInstrument_Spoon_B_Wood_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_DEC_GEN_Paintbrush_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_LOOT_Alchemy_Crystal_I",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_LOOT_GEN_Needle_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_LOOT_GEN_Palette_Paint_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_LOOT_GEN_Poop_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_LOOT_GEN_Poop_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_LOOT_GEN_Wheat_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_LOOT_GOB_Spear_Tip_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_TOOL_Camp_Bedroll_Open_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_TOOL_Camp_Bedroll_Open_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_TOOL_GEN_Broom_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_TOOL_GEN_Hammer_Repair_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_TOOL_GEN_Tong_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_TOOL_GOB_Branding_Tool_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_TOOL_GTY_Microscope_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CINE_TOOL_Masonry_Hammer_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Drink_Bottle_Small_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Drink_Bottle_Small_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Drink_Bottle_Small_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Drink_Bottle_Small_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Drink_Bottle_Small_E",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Drink_Potion_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Drink_Potion_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Drink_Potion_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Drink_Potion_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Drink_Wine_Glass_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_FOOD_Fish_Rotten_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_FOOD_Fish_Rotten_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_FOOD_Fish_Rotten_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_FOOD_Fish_Rotten_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_FOOD_Fruit_Banana_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_FOOD_Fruit_Lemon_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_FOOD_Mushroom_Bluecap",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_FOOD_Vegetable_Carrot_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_FOOD_Vegetable_Tomato_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Fungi_Mushroom_Agaric_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_Fungi_Mushroom_Agaric_B_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Alcohol_Bottle_Cheap_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Drink_Cup_Metal_A_Empty",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Drink_Cup_Metal_A_Flipped",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Drink_Cup_Metal_A_Oil",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Drink_Mug_Metal_A_Beer",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Drink_Mug_Metal_A_Empty",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Cheese_Blue_Piece_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Cheese_Blue_Piece_B_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Cheese_Blue_Wheel_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Cheese_Cheddar_Piece_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Cheese_Cheddar_Piece_B_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Cheese_Cheddar_Wheel_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Cheese_Goat_Piece_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Cheese_Goat_Piece_B_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Cheese_Goat_Wheel_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Eggs_A_Rotten",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Plate_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Food_Plate_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONS_GEN_Rotten_Food",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "CONT_Jergal_Urn_Bones_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Dungeon_Skeleton_Skull_A_Bloody_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Dungeon_Skeleton_Skull_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Gore_Pile_A_DarkUrgeButler",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Gore_Pile_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Hanging_Furnace_Pot_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Ink_Pot_Closed_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Ink_Pot_Open_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Ink_Pot_Quill_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Ink_Pot_QuillAndPot_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Junk_A_FishSkeleton_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Kitchen_Bucket_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Kitchen_Cutlery_Glass_Poor_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Kitchen_Cutlery_Plate_Poor_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Kitchen_CuttingBoard_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Kitchen_Pan_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Kitchen_Pan_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Kitchen_Plate_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Kitchen_Pot_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Kitchen_Pot_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Kitchen_Pot_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Owlbear_Plush_Toy_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towel_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towel_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towel_Blood_Holding_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towel_Bloody_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towel_Bloody_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towel_Bloody_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towel_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Pile_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Pile_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Pile_Bloody_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Pile_Bloody_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_A_converted",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_B_converted",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_Bloody_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_Bloody_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_Bloody_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_Bloody_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_Bloody_E",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_Bloody_F",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_C_converted",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_D_converted",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_E_converted",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_E",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_F_converted",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_GEN_Towels_Stacked_F",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_HAG_Tea_Pot_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_HAG_Totem_Props_Bottle_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_HAG_Totem_Props_Bowl_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_HAR_Bucket_Empty_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_HAR_FishingRod_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_HAR_FishingRod_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_HAR_FishingRod_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_HAR_Pier_Rope_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Harbour_Shell_Conch_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Harbour_Shell_Conch_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Harbour_Shell_Starfish_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Harbour_Shell_Venus_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Hospital_Bloodbank_Transfusion_Bottle_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_A_GlowA",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_B_Empty_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_B_GlowA",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_C_Empty_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_C_GlowA",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_D_Empty_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_D_Glow_Green_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_D_GlowA",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_E_Empty_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_E_GlowA",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "DEC_Laboratory_Flask_Glass_Installation_E",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "FUR_GEN_Kitchen_Cup_Glass_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "FUR_GEN_Kitchen_Cup_Glass_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LAB_GEN_Bottle_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LAB_GEN_Bottle_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LAB_GEN_Bottle_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LAB_GEN_Bottle_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LAB_GEN_Bottle_E",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_Dungeon_SharTemple_Gem_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_Dungeon_Skeleton_Animal_RamBone_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_Dungeon_Skeleton_Animal_RamBone_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Bedlinen_A_Folded",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Bowl_Metal_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Bowl_Wooden_A_Frog_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Bowl_Wooden_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Charcoal_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Charcoal_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Charcoal_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Charcoal_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Charcoal_E",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_DryBone_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Ghastly_Bottles_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Ghastly_Bottles_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Ghastly_Bottles_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Ghastly_Bottles_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Ghastly_Bottles_E",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Ghastly_Bottles_F",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Ghastly_Bottles_G",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Junk_A_FishSkeleton_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_TeddyBear_A_Clean",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_TeddyBear_A_Worn",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_TeddyBear_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_TeddyBear_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_TeddyBear_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_TeddyBear_E",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_TeddyBear_F",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_TeddyBear_G",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_WoodenBlock_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_WoodenBlock_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_WoodenBlock_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Toy_WoodenBlock_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GEN_Wheat_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_GOB_Spear_Tip_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_HAG_Skeleton_Ribs_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_Smith_Bellows_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_Smith_Tongs_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_Smith_Tongs_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_Smith_Tongs_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_Smith_Tongs_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "LOOT_Smith_Tongs_E",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Camp_Bedroll_Closed_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Camp_Bedroll_Open_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Camp_Bedroll_Open_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Camp_Bedroll_Open_C",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Camp_Bedroll_Open_D",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Camp_Bedroll_Open_E",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Camp_Bedroll_Open_F",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Camp_Bedroll_Open_G",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Camp_Bedroll_Open_H",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_GEN_Broom_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_GEN_Broom_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_GEN_Hammer_Repair_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_GEN_Identifying_Glass_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_GEN_Music_Guitar_Lute_A_Broken",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_GEN_Pitchfork_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_GEN_Tong_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_GOB_Branding_Tool_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_GTY_Microscope_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Hospital_Surgery_Kit_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Hospital_Surgery_Kit_B",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Masonry_Chisel_Kit_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Masonry_Hammer_A",
+                                        "enabled": true
+                                    },
+                                    {
+                                        "name": "TOOL_Rope_A",
+                                        "enabled": true
+                                    }
+                                ],
+                                "Options": {
+                                    "AllowReordering": false,
+                                    "PageSize": 10,
+                                    "ReadOnly": false,
+                                    "ShowSearchBar": true
+                                }
+                            },
                             "Handles": {
                                 "DescriptionHandle": "hb484603b6e7d4c1a888b4b6ffba24c4a5987",
                                 "NameHandle": "hcf273c2445e64997a7cd82fc01b4f8e6a4cd"

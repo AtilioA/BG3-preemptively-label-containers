@@ -18,7 +18,7 @@
     <content contentuid="hde2da1edd3d24614b5c2de43bda4dbb1ae41" version="1">Simular espaçamento da interface de controle</content>
     <content contentuid="h04f84c2ea34845b49a85711fa85aed230c38" version="1">Exibir número de itens no rótulo</content>
     <content contentuid="h9ac5000732c74d0590fff2a63023a61c1beb" version="1">Exibir número mesmo se vazio</content>
-    <content contentuid="hcf273c2445e64997a7cd82fc01b4f8e6a4cd" version="1">Ignorar itens</content>
+    <content contentuid="hcf273c2445e64997a7cd82fc01b4f8e6a4cd" version="1">Itens ignorados</content>
     <content contentuid="hb8f7418427984bf390bb58773b16adb0c742" version="1">Ativa/desativa o mod sem desinstalá-lo.</content>
     <content contentuid="h0eea6060d72a4d0fb47028db2efb007d3edb" version="1">0 = sem depuração, 1 = mínimo, 2 = logs de depuração detalhados.</content>
     <content contentuid="h1a7ee4059aea4424add5e0bc4bbda02365ac" version="1">Ignorar verificações para atualizar rótulos de containers:&lt;br&gt;sempre regera rótulos, mesmo se já tiverem sido criados.</content>
@@ -34,8 +34,7 @@
     <content contentuid="h848b235a75334030af14a12b5ed77d4fc161" version="1">Simular o espaçamento usado em rótulos vazios ao usar um controle.</content>
     <content contentuid="h9f0e982cf4e74611839b3df76e43cb207a2a" version="1">Exibir o número de itens no container.</content>
     <content contentuid="h1fd36e0083fe45a08879f8dfbc4c849d460d" version="1">Mostrar o número de itens mesmo se o container estiver vazio.</content>
-    <content contentuid="hb484603b6e7d4c1a888b4b6ffba24c4a5987" version="1">Ignorar itens no arquivo 'ignored_items.json' ao fazer contagem de itens.
-    </content>
+    <content contentuid="hb484603b6e7d4c1a888b4b6ffba24c4a5987" version="1">Lista de itens a serem ignorados ao fazer contagem de itens.</content>
     <content contentuid="h5e484357348f414bb97272a4a2c59921ba97" version="1">Remover rótulo de containers abertos</content>
     <content contentuid="hc99f15bcfca74605b00e1e322a0ed94e262b" version="1">Tentar remover o rótulo de containers que foram abertos na sessão atual.</content>
 </contentList>
