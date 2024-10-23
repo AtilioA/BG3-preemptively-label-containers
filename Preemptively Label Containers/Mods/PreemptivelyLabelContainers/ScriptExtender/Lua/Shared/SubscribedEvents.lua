@@ -34,6 +34,10 @@ function SubscribedEvents.SubscribeToEvents()
             return
         end
 
+        if payload.settingId == "ignored_items" then
+            Junk.IgnoredItemsTable = MCM.GetList("ignored_items")
+        end
+
         Labeling.LabelNearbyContainers()
     end)
 end
