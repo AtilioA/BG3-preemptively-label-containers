@@ -150,10 +150,11 @@ local function CreateLabel(count, displayItemCount, displayCountIfEmpty, addPare
         return ""
     end
 end
-
---- Add the Labeling.HANDLE_LABEL to the stringHandle
+--- Add the Labeling.HANDLE_LABEL to the stringHandle with a random number
 function CreateLabeledHandle(entity)
-    return entity.DisplayName.NameKey.Handle.Handle .. Labeling.HANDLE_LABEL .. "_" .. entity.Uuid.EntityUuid
+    local randomNumber = math.random(0, 99999)
+    return entity.DisplayName.NameKey.Handle.Handle ..
+        Labeling.HANDLE_LABEL .. "_" .. randomNumber .. "_" .. entity.Uuid.EntityUuid
 end
 
 --- Remove the Labeling.HANDLE_LABEL from the stringHandle and everything after it (uuid)
@@ -191,30 +192,49 @@ function SetNewLabel(container, shouldPadLabel)
     local shouldDisplayNumberOfItems = MCMGet("display_number_of_items")
     local displayCountIfEmpty = MCMGet("if_empty")
 
-    local label = CreateLabel(itemCount, shouldDisplayNumberOfItems, displayCountIfEmpty, addParentheses, capitalize)
-    if shouldPadLabel and label ~= "" then -- and shouldDisplayNumberOfItems and itemCount ~= 0 then
-        label = LabelString.PadString(label, 58, originalName)
+    local function createLabel()
+        local label = CreateLabel(itemCount, shouldDisplayNumberOfItems, displayCountIfEmpty, addParentheses, capitalize)
+        if shouldPadLabel and label ~= "" then
+            label = LabelString.PadString(label, 58, originalName)
+        end
+        -- Trim whitespace from the label
+        return label:match("^%s*(.-)%s*$")
     end
+
+    local label = createLabel()
 
     PLCPrint(3, "Label: " .. label)
 
     local entity = VCHelpers.Object:GetEntity(container)
     if entity ~= nil then
-        if label ~= "" then
-            local newDisplayName
-            if shouldAppend or shouldPadLabel then
-                newDisplayName = originalName .. " " .. label
-            else
-                newDisplayName = label .. " " .. originalName
-            end
-            local labeledHandle = GetLabeledHandle(entity)
-            Ext.Loca.UpdateTranslatedString(labeledHandle, newDisplayName)
-            -- Send to clients so that they can also update the label (won't work on multiplayer otherwise)
-            Ext.Net.BroadcastMessage("PLC_UpdateLabel",
-                Ext.Json.Stringify({ handle = labeledHandle, newLabel = newDisplayName }))
-            entity.DisplayName.NameKey.Handle.Handle = labeledHandle
-            entity:Replicate("DisplayName")
+        if label == "" then
+            PLCPrint(2, "Empty label, removing label for: " .. container .. " (" .. originalName .. ") with items " ..
+                Ext.DumpExport(VCHelpers.Inventory:GetInventory(container)))
+            RemoveLabel(container)
+            return
         end
+
+        local newDisplayName
+        if shouldAppend or shouldPadLabel then
+            newDisplayName = originalName .. " " .. label
+            PLCPrint(3, "Appending label: " .. newDisplayName)
+        else
+            newDisplayName = label .. " " .. originalName
+            PLCPrint(3, "Prepending label: " .. newDisplayName)
+        end
+        local labeledHandle = GetLabeledHandle(entity)
+        Ext.Loca.UpdateTranslatedString(labeledHandle, newDisplayName)
+        PLCPrint(2,
+            "Updated translated string for handle: " ..
+            labeledHandle ..
+            " (" ..
+            newDisplayName ..
+            ") for container with items: " .. Ext.DumpExport(VCHelpers.Inventory:GetInventory(container)))
+        -- Send to clients so that they can also update the label (won't work on multiplayer otherwise)
+        Ext.Net.BroadcastMessage("PLC_UpdateLabel",
+            Ext.Json.Stringify({ handle = labeledHandle, newLabel = newDisplayName }))
+        entity.DisplayName.NameKey.Handle.Handle = labeledHandle
+        entity:Replicate("DisplayName")
     else -- This is a temporary workaround for containers that are not yet loaded
         PLCPrint(2, "Entity is nil")
     end
