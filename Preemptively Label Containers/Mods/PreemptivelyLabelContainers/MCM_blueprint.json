@@ -1138,13 +1138,13 @@
                                         "name": "TOOL_Rope_A",
                                         "enabled": true
                                     }
-                                ],
-                                "Options": {
-                                    "AllowReordering": false,
-                                    "PageSize": 10,
-                                    "ReadOnly": false,
-                                    "ShowSearchBar": true
-                                }
+                                ]
+                            },
+                            "Options": {
+                                "AllowReordering": false,
+                                "PageSize": 10,
+                                "ReadOnly": false,
+                                "ShowSearchBar": true
                             },
                             "Handles": {
                                 "DescriptionHandle": "hb484603b6e7d4c1a888b4b6ffba24c4a5987",
