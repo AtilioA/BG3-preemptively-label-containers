@@ -18,8 +18,6 @@ function SubscribedEvents.SubscribeToEvents()
     Ext.Osiris.RegisterListener("GainedControl", 1, "after", conditionalWrapper(EHandlers.OnGainedControl))
     Ext.Osiris.RegisterListener("LevelGameplayStarted", 2, "after", conditionalWrapper(EHandlers.OnLevelGameplayStarted))
 
-    Ext.Osiris.RegisterListener("TimerFinished", 1, "after", conditionalWrapper(EHandlers.OnTimerFinished))
-
     Ext.Osiris.RegisterListener("UseStarted", 2, "before", conditionalWrapper(EHandlers.OnUseStarted))
     Ext.Osiris.RegisterListener("UseFinished", 3, "before", conditionalWrapper(EHandlers.OnUseEnded))
 

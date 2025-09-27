@@ -1,13 +1,37 @@
 EHandlers = {}
 
+EHandlers.LABELING_TIMER_NAME = "RenameContainers"
+EHandlers._labelingTimerHandle = nil
+
 EHandlers.all_opened_containers = {}
 EHandlers.recently_closed = {}
 -- We're interested in containers/corpses, but we check for objects to avoid doing checks early
 EHandlers.processed_objects = {}
 
+local function cancelLabelingTimer()
+    if EHandlers._labelingTimerHandle ~= nil then
+        Ext.Timer.Cancel(EHandlers._labelingTimerHandle)
+        EHandlers._labelingTimerHandle = nil
+    end
+end
+
+local function scheduleLabelingTimer()
+    local interval = tonumber(MCMGet("refresh_interval_ms"))
+    if not interval or interval <= 0 then
+        PLCPrint(1, "Skipping timer scheduling; invalid refresh interval: " .. tostring(interval))
+        return
+    end
+
+    EHandlers._labelingTimerHandle = Ext.Timer.WaitFor(interval, function()
+        EHandlers._labelingTimerHandle = nil
+        EHandlers.OnTimerFinished()
+    end)
+end
+
 function EHandlers.StartLabelingTimer()
+    cancelLabelingTimer()
     Labeling.LabelNearbyContainers()
-    Osi.TimerLaunch("RenameContainers", MCMGet("refresh_interval_ms"))
+    scheduleLabelingTimer()
 end
 
 -- Initializes a timer on gaining control
@@ -19,12 +43,8 @@ function EHandlers.OnLevelGameplayStarted()
     EHandlers.StartLabelingTimer()
 end
 
-function EHandlers.OnTimerFinished(timerName)
-    if timerName ~= "RenameContainers" then
-        return
-    end
-
-    PLCPrint(2, "Timer finished: " .. timerName)
+function EHandlers.OnTimerFinished()
+    PLCPrint(2, "Timer finished: " .. EHandlers.LABELING_TIMER_NAME)
     EHandlers.StartLabelingTimer()
 end
 
