@@ -1,9 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <save>
-  <version major="4" minor="8" revision="0" build="200" />
+  <version major="4" minor="8" revision="0" build="500" />
   <region id="Config">
     <node id="root">
       <children>
+        <node id="Conflicts"/>
         <node id="Dependencies">
           <children>
             <node id="ModuleShortDesc">
@@ -11,14 +12,16 @@
               <attribute id="MD5" type="LSString" value="" />
               <attribute id="Name" type="FixedString" value="VolitionCabinet" />
               <attribute id="UUID" type="guid" value="f97b43be-7398-4ea5-8fe2-be7eb3d4b5ca" />
-              <attribute id="Version64" type="int64" value="36169534507319296" />
+              <attribute id="PublishHandle" type="uint64" value="0"/>
+              <attribute id="Version64" type="int64" value="38280596832649216" />
             </node>
             <node id="ModuleShortDesc">
               <attribute id="Folder" type="LSWString" value="BG3MCM" />
               <attribute id="MD5" type="LSString" value="" />
               <attribute id="Name" type="FixedString" value="Mod Configuration Menu" />
               <attribute id="UUID" type="guid" value="755a8a72-407f-4f0d-9a33-274ac0f0b53d" />
-              <attribute id="Version64" type="int64" value="41095348747239424" />
+              <attribute id="PublishHandle" type="uint64" value="0"/>
+              <attribute id="Version64" type="int64" value="41376825871433728" />
             </node>
           </children>
         </node>
@@ -38,10 +41,10 @@
           <attribute id="Tags" type="LSString" value="" />
           <attribute id="Type" type="FixedString" value="Add-on" />
           <attribute id="UUID" type="FixedString" value="15230bba-a3ab-4352-92f6-1c4c86d2a1e3" />
-          <attribute id="Version64" type="int64" value="108227128545247232" />
+          <attribute id="Version64" type="int64" value="108367866033602560" />
           <children>
             <node id="PublishVersion">
-              <attribute id="Version64" type="int64" value="108227128545247232" />
+              <attribute id="Version64" type="int64" value="108367866033602560" />
             </node>
             <node id="Scripts" />
             <node id="TargetModes">
