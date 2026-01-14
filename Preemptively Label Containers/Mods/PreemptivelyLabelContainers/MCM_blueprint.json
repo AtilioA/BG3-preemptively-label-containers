@@ -148,7 +148,7 @@
                             "Name": "Label containers for all party members",
                             "Type": "checkbox",
                             "Default": true,
-                            "Description": "Label containers for all party members\n(unchecked = only label for the host/active character).",
+                            "Description": "Label containers for all party members.\n(unchecked = only label for the host/active character)\nNote: this has a moderate performance impact when party members are far from the host.",
                             "Handles": {
                                 "DescriptionHandle": "h3a7d2f9c51334f038d0a3b345a70b55449b4",
                                 "NameHandle": "hd0f4763d1a5f4e939e209e5b3c35e74eb702"
